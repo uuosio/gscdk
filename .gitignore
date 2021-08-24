@@ -4,6 +4,8 @@ generated.go
 *.wasm
 *.abi
 *.wast
+*.wallet
+__pycache__
 
 # Binaries for programs and plugins
 *.exe
