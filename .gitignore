@@ -1,3 +1,10 @@
+generated.abi
+generated.go
+*.bk
+*.wasm
+*.abi
+*.wast
+
 # Binaries for programs and plugins
 *.exe
 *.exe~
