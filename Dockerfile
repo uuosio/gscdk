@@ -17,6 +17,7 @@ RUN apt install -y git
 RUN wget https://golang.org/dl/go1.16.7.linux-amd64.tar.gz
 RUN rm -rf /usr/local/go && tar -C /usr/local -xzf go1.16.7.linux-amd64.tar.gz
 RUN ln -sf /usr/local/go/bin/go /usr/local/bin/go
+RUN rm go1.16.7.linux-amd64.tar.gz
 
 RUN wget https://github.com/EOSIO/eosio.cdt/releases/download/v1.7.0/eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb
 RUN apt install -y ./eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb
