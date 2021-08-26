@@ -4,7 +4,7 @@ Go Smart Contracts Development Kit
 <h3>
   <a
     target="_blank"
-    href="https://mybinder.org/v2/gh/uuosio/uuosio.gscdk/main?filepath=tutorials"
+    href="https://mybinder.org/v2/gh/uuosio/uuosio.gscdk/main?filepath=quickstart/quickstart.ipynb"
   >
     Quick Start
     <img alt="Binder" valign="bottom" height="25px"
