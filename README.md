@@ -14,21 +14,6 @@ Go Smart Contracts Development Kit
   </a>
 </h3>
 
-# Tutorials
-
-<h3>
-  <a
-    target="_blank"
-    href="https://mybinder.org/v2/gh/uuosio/uuosio.gscdk/main?filepath=tutorials"
-  >
-    Tutorials
-    <img alt="Binder" valign="bottom" height="25px"
-    src="https://mybinder.org/badge_logo.svg"
-    />
-  </a>
-</h3>
-
-
 # Build Go Smart Contracts Compiler
 
 Follow the steps in [Building](./BUILDING.md)
@@ -56,9 +41,30 @@ Install debian package directly on Ubuntu platform
 sudo apt install ./release.deb
 ```
 
-# Examples
+# Run Examples
 
-# Tutorials
+```
+python3.7 -m pip install https://github.com/uuosio/UUOSKit/releases/download/v0.8.4/uuoskit-0.8.4-cp37-cp37m-linux_x86_64.whl
+
+cd examples/hello
+
+python3.7 test.py
+
+```
+
+# Run Tutorials
+
+<h3>
+  <a
+    target="_blank"
+    href="https://mybinder.org/v2/gh/uuosio/uuosio.gscdk/main?filepath=tutorials"
+  >
+    Tutorials
+    <img alt="Binder" valign="bottom" height="25px"
+    src="https://mybinder.org/badge_logo.svg"
+    />
+  </a>
+</h3>
 
 # Additional Options Other than Official Tinygo Commands
 
