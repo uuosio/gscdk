@@ -1,8 +1,7 @@
 package main
 
 import (
-	"chain"
-	"chain/logger"
+	"github.com/uuosio/chain"
 )
 
 //contract hello
@@ -18,5 +17,5 @@ func NewContract(receiver, firstReceiver, action chain.Name) *MyContract {
 
 //action sayhello
 func (c *MyContract) SayHello(name string) {
-	logger.Println("Hello", name)
+	println("Hello", name)
 }
