@@ -18,61 +18,64 @@ Go Smart Contracts Development Kit
 
 Follow the steps in [Building](./BUILDING.md)
 
-This will build tinygo command in compiler/build directory that support for build Go Smart Contracts.
+That will build tinygo command in compiler/build directory that support build Go Smart Contracts.
 
-## Add tinygo to PATH environment variable
-```
+#### Set PATH
+
+```bash
 export PATH=$(pwd)/compiler/build:$PATH
 ```
 
-# Install from Release Binary
+# Install from Pre-build Binary
 
 First download binary file from [releases](https://github.com/uuosio/uuosio.gscdk/releases)
 
 For tar.gz file
 
 ```bash
-tar -C /usr/local -xzf release.tar.gz
+tar -C /usr/local -xzf uuosio.gscdk.tar.gz
 export PATH=/usr/local/uuosio.gscdk/bin:$PATH
 ```
 
 Install debian package directly on Ubuntu platform
+
 ```bash
-sudo apt install ./release.deb
+sudo apt install ./uuosio.gscdk.deb
 ```
 
-# Run Examples
+# eosio-go Command
 
-```
-python3.7 -m pip install https://github.com/uuosio/UUOSKit/releases/download/v0.8.4/uuoskit-0.8.4-cp37-cp37m-linux_x86_64.whl
+All commands based on examples/hello example
 
+First cd to hello directory:
+
+```bash
 cd examples/hello
-
-python3.7 test.py
-
 ```
 
-# Run Tutorials
+#### Building
 
-<h3>
-  <a
-    target="_blank"
-    href="https://mybinder.org/v2/gh/uuosio/uuosio.gscdk/main?filepath=tutorials"
-  >
-    Tutorials
-    <img alt="Binder" valign="bottom" height="25px"
-    src="https://mybinder.org/badge_logo.svg"
-    />
-  </a>
-</h3>
+```bash
+eosio-go build -o hello .
+```
 
-# Additional Options Other than Official Tinygo Commands
+#### Generating ABI and Extra Code for Smart Contracts
 
-## gen-code
+```
+eosio-go gencode
+```
 
-If gen-code option is true, generate code for Go Smart Contracts or not. Default to "true". Only has effect on eosio target.
+Code generation is also the default option for "build" command
 
-## strip
 
-If strip option is true, strip custom section for wasm file to reduce size. Default to "true". Only has effect on eosio target
+#### Disable Code Generation during Building
 
+```bash
+eosio-go build -gen-code=false -o hello .
+```
+
+#### Disable Striping WASM File after Building
+
+```bash
+eosio-go build -strip=false -o hello .
+```
