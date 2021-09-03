@@ -33,14 +33,14 @@ First download binary file from [releases](https://github.com/uuosio/uuosio.gscd
 For tar.gz file
 
 ```bash
-tar -C /usr/local -xzf uuosio.gscdk.tar.gz
+tar -C /usr/local -xzf uuosio.gscdk-linux-0.1.0.tar.gz
 export PATH=/usr/local/uuosio.gscdk/bin:$PATH
 ```
 
 Install debian package directly on Ubuntu platform
 
 ```bash
-sudo apt install ./uuosio.gscdk.deb
+sudo apt install ./uuosio.gscdk-linux-0.1.0.deb
 ```
 
 # eosio-go Command
