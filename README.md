@@ -56,7 +56,7 @@ cd examples/hello
 #### Building
 
 ```bash
-eosio-go build -o hello .
+eosio-go build -o hello.wasm .
 ```
 
 #### Generating ABI and Extra Code for Smart Contracts
