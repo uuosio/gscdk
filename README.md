@@ -26,7 +26,7 @@ That will build tinygo command in compiler/build directory that support build Go
 export PATH=$(pwd)/compiler/build:$PATH
 ```
 
-# Install from Pre-build Binary
+# Install from Pre-built Binary
 
 First download binary file from [releases](https://github.com/uuosio/uuosio.gscdk/releases)
 
