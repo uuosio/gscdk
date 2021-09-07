@@ -1,7 +1,7 @@
 package main
 
 import (
-	"chain"
+	"github.com/uuosio/chain"
 )
 
 type Transfer struct {

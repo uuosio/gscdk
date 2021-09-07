@@ -1,8 +1,7 @@
 package main
 
 import (
-	"chain"
-	"chain/logger"
+	"github.com/uuosio/chain"
 )
 
 //contract hello
@@ -20,7 +19,7 @@ func NewContract(receiver, firstReceiver, action chain.Name) *MyContract {
 func (c *MyContract) Transfer(from, to chain.Name, quantity chain.Asset, memo string) {
 	if c.FirstReceiver == chain.NewName("eosio.token") && c.Action == chain.NewName("transfer") {
 		if to == chain.NewName("helloworld11") && quantity.Symbol == chain.NewSymbol("EOS", 4) {
-			logger.Println("Example2, memo:", memo)
+			chain.Println("Example2, memo:", memo)
 		}
 	}
 }

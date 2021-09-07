@@ -17,5 +17,7 @@ func NewContract(receiver, firstReceiver, action chain.Name) *MyContract {
 
 //action sayhello
 func (c *MyContract) SayHello(name string) {
-	chain.Println("Hello", name)
+	a := make([]string, 1)
+	chain.Check(a[0] == "", a[0])
+	chain.Println("Hello", name, a)
 }

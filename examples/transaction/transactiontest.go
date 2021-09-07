@@ -1,8 +1,7 @@
 package main
 
 import (
-	"chain"
-	"chain/logger"
+	"github.com/uuosio/chain"
 )
 
 type TransactionTest struct {
@@ -35,5 +34,5 @@ func (test *TransactionTest) SayHello() {
 	tx := chain.NewTransaction(1)
 	tx.Actions = []chain.Action{a}
 	tx.Send(1, false, payer)
-	logger.Println("transaction sent")
+	chain.Println("transaction sent")
 }
