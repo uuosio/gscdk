@@ -17,5 +17,5 @@ func NewContract(receiver, firstReceiver, action chain.Name) *MyContract {
 
 //action sayhello
 func (c *MyContract) SayHello(name string) {
-	chain.Println("Hello", name, a)
+	chain.Println("Hello", name)
 }
