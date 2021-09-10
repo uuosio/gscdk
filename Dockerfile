@@ -19,12 +19,12 @@ RUN rm -rf /usr/local/go && tar -C /usr/local -xzf go1.16.7.linux-amd64.tar.gz
 RUN ln -sf /usr/local/go/bin/go /usr/local/bin/go
 RUN rm go1.16.7.linux-amd64.tar.gz
 
-RUN wget https://github.com/EOSIO/eosio.cdt/releases/download/v1.7.0/eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb
-RUN apt install -y ./eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb
-RUN rm ./eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb
+# RUN wget https://github.com/EOSIO/eosio.cdt/releases/download/v1.7.0/eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb
+# RUN apt install -y ./eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb
+# RUN rm ./eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb
 
-RUN wget https://github.com/uuosio/uuosio.gscdk/releases/download/v0.1.0/uuosio.gscdk-linux-0.1.0.tar.gz
-RUN tar -C /usr/local -xzf uuosio.gscdk-linux-0.1.0.tar.gz
+RUN wget https://github.com/uuosio/uuosio.gscdk/releases/download/v0.1.1/uuosio.gscdk-linux-0.1.1.tar.gz
+RUN tar -C /usr/local -xzf uuosio.gscdk-linux-0.1.1.tar.gz
 RUN ln -sf /usr/local/uuosio.gscdk/bin/tinygo /usr/local/bin/tinygo
 RUN ln -sf /usr/local/uuosio.gscdk/bin/eosio-go /usr/local/bin/eosio-go
 RUN ln -sf /usr/local/uuosio.gscdk/bin/eosio-strip /usr/local/bin/eosio-strip
