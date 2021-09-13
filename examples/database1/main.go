@@ -2,12 +2,13 @@ package main
 
 import (
 	"github.com/uuosio/chain"
+	"github.com/uuosio/chain/logger"
 )
 
 //table mytable
 type MyData struct {
 	primary uint64 //primary: t.primary
-	n       uint64
+	name    string
 }
 
 //contract mycontract
@@ -23,17 +24,23 @@ func NewContract(receiver, firstReceiver, action chain.Name) *MyContract {
 
 //action sayhello
 func (c *MyContract) SayHello(name string) {
-	code := chain.NewName("hello")
+	code := c.Receiver
 	scope := code
-	payer := code
+	payer := c.Receiver
 	mydb := NewMyDataDB(code, scope)
-	primary := uint64(1)
+	primary := uint64(111)
 	it, data := mydb.Get(primary)
 	if !it.IsOk() {
-		data := &MyData{primary, 111}
+		logger.Println("Welcome new friend", name)
+		data := &MyData{primary, name}
 		mydb.Store(data, payer)
 	} else {
-		data.n += 1
+		if data.name != name {
+			logger.Println("Welcome new friend:", name)
+		} else {
+			logger.Println("Welcome old friend", name)
+		}
+		data.name = name
 		mydb.Update(it, data, payer)
 	}
 }
