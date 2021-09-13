@@ -1,5 +1,7 @@
 import os
 from uuoskit import uuosapi, wallet, config
+from uuoskit import log
+logger = log.get_logger(__name__)
 
 python_contract = config.python_contract
 test_account1 = 'helloworld11'
@@ -26,5 +28,5 @@ try:
 except Exception as e:
     print(e.json['error']['what'])
 
-r = uuosapi.push_action(test_account1, 'sayhello', {'name': 'alice'}, {'helloworld11':'active'})
+r = uuosapi.push_action(test_account1, 'sayhello', {'name': 'alice'}, {'hello':'active'})
 print(r['processed']['action_traces'][0]['console'])
