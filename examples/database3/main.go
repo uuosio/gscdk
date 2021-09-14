@@ -45,10 +45,9 @@ func (t *MyContract) SayHello() {
 
 	secondary := uint64(0)
 	{
-		idxDB := mi.GetIdxDB("bya1")
-		it, _secondary := idxDB.FindByPrimary(primary)
+		idxDB := mi.GetIdxDBbya1()
+		it, secondary := idxDB.FindByPrimary(primary)
 		chain.Check(it.IsOk(), "Invalid secondary iterator")
-		secondary = _secondary.(uint64)
 		secondary += 1
 		logger.Println(idxDB.GetIndex(), it.I, it.Primary, secondary)
 		if it.IsOk() {
