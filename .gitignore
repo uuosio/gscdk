@@ -1,3 +1,9 @@
+_skbuild
+dist
+gscdk.egg-info
+uuosio.gscdk.egg-info
+MANIFEST
+
 .ipynb_checkpoints
 .vscode
 generated.abi
