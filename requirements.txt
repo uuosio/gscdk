@@ -1,0 +1,2 @@
+https://github.com/uuosio/UUOSKit/releases/download/v0.8.4/uuoskit-0.8.4-cp37-cp37m-linux_x86_64.whl
+https://github.com/uuosio/uuosio.gscdk/releases/download/v0.1.2/gscdk-0.1.0-py3-none-manylinux1_x86_64.whl

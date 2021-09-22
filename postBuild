@@ -1,0 +1,4 @@
+wget https://golang.org/dl/go1.16.7.linux-amd64.tar.gz
+tar -xzf go1.16.7.linux-amd64.tar.gz
+export PATH=$(pwd)/go/bin:$PATH
+
