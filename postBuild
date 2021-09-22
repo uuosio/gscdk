@@ -1,4 +1,12 @@
+mkdir -p $HOME/.local/bin
+
 wget https://golang.org/dl/go1.16.7.linux-amd64.tar.gz
 tar -xzf go1.16.7.linux-amd64.tar.gz
-export PATH=$(pwd)/go/bin:$PATH
+ln -s $(pwd)/go/bin/go $HOME/.local/bin/go
 
+
+wget https://github.com/uuosio/uuosio.gscdk/releases/download/v0.1.2/uuosio.gscdk-linux-0.1.2.tar.gz
+tar -xzf uuosio.gscdk-linux-0.1.2.tar.gz
+ln -sf $(pwd)/uuosio.gscdk/bin/tinygo $HOME/.local/bin/tinygo
+ln -sf $(pwd)/uuosio.gscdk/bin/eosio-go $HOME/.local/bin/eosio-go
+ln -sf $(pwd)/uuosio.gscdk/bin/eosio-strip $HOME/.local/bin/eosio-strip
