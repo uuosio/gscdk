@@ -1,5 +1,9 @@
+
 import os
-from skbuild import setup
+import setuptools
+# from skbuild import setup
+from distutils.core import setup
+
 from distutils.sysconfig import get_python_lib
 import glob
 
@@ -20,8 +24,9 @@ setup(
 #        "": ["*"],
         'gscdk': release_files,
     },
-    scripts=['compiler/build/release/tinygo/bin/eosio-go'],
-    install_requires=[
-    ],
-    include_package_data=True
+    setup_requires=['wheel']
+    # scripts=['compiler/build/release/tinygo/bin/eosio-go'],
+    # install_requires=[
+    # ],
+    # include_package_data=True
 )
