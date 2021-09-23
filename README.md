@@ -71,7 +71,7 @@ func (c *MyContract) SayHello(name string) {
 
 Follow the steps in [Building](./BUILDING.md)
 
-That will build tinygo command in compiler/build directory that support build Go Smart Contracts.
+That will build tinygo command in compiler/build directory that support for building Go Smart Contracts.
 
 #### Set PATH
 
@@ -89,6 +89,14 @@ For tar.gz file
 tar -C /usr/local -xzf uuosio.gscdk-linux-0.1.0.tar.gz
 export PATH=/usr/local/uuosio.gscdk/bin:$PATH
 ```
+
+Install through a Python wheel package
+
+```bash
+python3 -m pip install https://github.com/uuosio/uuosio.gscdk/releases/download/v0.1.2/gscdk-0.1.0-py3-none-manylinux1_x86_64.whl
+```
+Change the wheel package download url as you need.
+
 
 Install debian package directly on Ubuntu platform
 
