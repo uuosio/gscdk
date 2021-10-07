@@ -50,19 +50,18 @@ func (c *MyContract) SayHello(name string) {
 	payer := c.Receiver
 	mydb := NewMyDataDB(code, scope)
 	primary := uint64(111)
-	it, data := mydb.Get(primary)
-	if !it.IsOk() {
-		logger.Println("Welcome new friend", name)
-		data := &MyData{primary, name}
-		mydb.Store(data, payer)
-	} else {
-		if data.name != name {
+	if it, data := mydb.Get(primary); it.IsOk() {
+        if data.name != name {
 			logger.Println("Welcome new friend:", name)
 		} else {
 			logger.Println("Welcome old friend", name)
 		}
 		data.name = name
 		mydb.Update(it, data, payer)
+    } else {
+		logger.Println("Welcome new friend", name)
+		data := &MyData{primary, name}
+		mydb.Store(data, payer)
 	}
 }
 ```
@@ -106,21 +105,16 @@ sudo apt install ./uuosio.gscdk-linux-0.1.0.deb
 
 # eosio-go Command
 
-All commands based on examples/hello example
+## Init Command
 
-First cd to hello directory:
+Init command initialize a project with contract name
 
-```bash
-cd examples/hello
+```
+eosio-go init -template simple mycontract
+cd mycontract
 ```
 
-#### Building
-
-```bash
-eosio-go build -o hello.wasm .
-```
-
-#### Generating ABI and Extra Code for Smart Contracts
+## Generating ABI and Extra Code for Smart Contracts
 
 ```
 eosio-go gencode
@@ -128,15 +122,22 @@ eosio-go gencode
 
 Code generation is also the default option for "build" command
 
+## Build Command
+
+#### Compile Source Code
+
+```bash
+eosio-go build -o mycontract.wasm .
+```
 
 #### Disable Code Generation during Building
 
 ```bash
-eosio-go build -gen-code=false -o hello .
+eosio-go build -gen-code=false -o mycontract .
 ```
 
 #### Disable Striping WASM File after Building
 
 ```bash
-eosio-go build -strip=false -o hello .
+eosio-go build -strip=false -o mycontract .
 ```
