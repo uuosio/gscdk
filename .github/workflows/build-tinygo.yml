@@ -47,7 +47,7 @@ jobs:
         id: releasefile
         working-directory: compiler
         run: |
-          echo "::set-output name=value::$(python scripts/get_release_file.py)"
+          echo "::set-output name=value::$(python ../scripts/get_release_file.py)"
       - name: release-tinygo
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
