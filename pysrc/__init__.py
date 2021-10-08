@@ -6,16 +6,17 @@ import shlex
 def run_tinygo():
     dir_name = os.path.dirname(os.path.realpath(__file__))
     dir_name = os.path.join(dir_name, "tinygo")
-    os.environ['GOROOT'] = dir_name
+    tinygo = os.path.join(dir_name, 'bin/tinygo')
     if len(sys.argv) <= 1:
-        cmd = [f'{dir_name}/bin/tinygo']
-        subprocess.call(cmd)
+        subprocess.call(tinygo)
     elif sys.argv[1] == "build":
-        cmd = f'{dir_name}/bin/tinygo build -x -gc=leaking -target eosio -wasm-abi=generic -scheduler=none -opt z -tags=math_big_pure_go'
-        cmd = shlex.split(cmd)
+        cmd = [tinygo]
+        args = 'build -x -gc=leaking -target eosio -wasm-abi=generic -scheduler=none -opt z -tags=math_big_pure_go'
+        args = shlex.split(args)
+        cmd.extend(args)
         cmd.extend(sys.argv[2:])
         subprocess.call(cmd)
     else:
-        cmd = [f'{dir_name}/bin/tinygo']
-        cmd.extend(sys.argv[1:])
+        cmd = sys.argv[:]
+        cmd[0] = tinygo
         subprocess.call(cmd)
