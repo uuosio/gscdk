@@ -110,7 +110,7 @@ sudo apt install ./uuosio.gscdk-linux-0.1.0.deb
 Init command initialize a project with contract name
 
 ```
-eosio-go init -template simple mycontract
+eosio-go init mycontract
 cd mycontract
 ```
 

@@ -10,13 +10,13 @@ def run_tinygo():
     os.chdir(dir_name)
     if len(sys.argv) <= 1:
         cmd = [f'{dir_name}/bin/tinygo']
-        subprocess.call(cmd, cwd=dir_name)
+        subprocess.call(cmd)
     elif sys.argv[1] == "build":
         cmd = f'{dir_name}/bin/tinygo build -x -gc=leaking -target eosio -wasm-abi=generic -scheduler=none -opt z -tags=math_big_pure_go'
         cmd = shlex.split(cmd)
         cmd.extend(sys.argv[2:])
-        subprocess.call(cmd, cwd=dir_name)
+        subprocess.call(cmd)
     else:
         cmd = [f'{dir_name}/bin/tinygo']
         cmd.extend(sys.argv[1:])
-        subprocess.call(cmd, cwd=dir_name)
+        subprocess.call(cmd)
