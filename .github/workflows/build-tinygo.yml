@@ -12,7 +12,7 @@ jobs:
   run:
     runs-on: ${{ matrix.os }}
     env:
-      GSCDK_VERSION: v0.1.5
+      GSCDK_VERSION: v0.1.6
     strategy:
       matrix:
         # python-version: [3.7, 3.8, 3.9]
