@@ -14,8 +14,7 @@ type Transfer struct {
 func main() {
 	_, _, action := chain.GetApplyArgs()
 	if action == chain.NewName("sayhello") {
-		a := chain.NewAction(chain.NewName("eosio.token"), chain.NewName("transfer"))
-		a.AddPermission(chain.NewName("helloworld11"), chain.ActiveName)
+		a := chain.NewAction(chain.PermissionLevel{chain.NewName("helloworld11"), chain.ActiveName}, chain.NewName("eosio.token"), chain.NewName("transfer"))
 
 		t := Transfer{}
 		t.From = chain.NewName("helloworld11")
