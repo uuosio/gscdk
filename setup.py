@@ -16,7 +16,7 @@ print(release_files)
 
 setup(
     name="gscdk",
-    version="0.1.4",
+    version="0.1.5",
     description="Go Smart Contract Development Kit",
     author='The UUOSIO Team',
     license="BSD-3-Clause",

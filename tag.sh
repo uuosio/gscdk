@@ -1,6 +1,7 @@
-VERSION=v0.1.3
-# git push origin :refs/tags/$VERSION
+VERSION=v0.1.5
+REMOTE=eosio
+git push $REMOTE :refs/tags/$VERSION
 git tag -d $VERSION
 git tag $VERSION -F release.txt
-git push origin $VERSION
+git push -f $REMOTE $VERSION
 

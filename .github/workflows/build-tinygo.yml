@@ -12,13 +12,13 @@ jobs:
   run:
     runs-on: ${{ matrix.os }}
     env:
-      GSCDK_VERSION: v0.1.4
+      GSCDK_VERSION: v0.1.5
     strategy:
       matrix:
         # python-version: [3.7, 3.8, 3.9]
         # os: ['windows-latest', 'ubuntu-latest', 'macos-latest']
         python-version: [3.9]
-        os: ['windows-latest', 'ubuntu-latest', 'macos-latest']
+        os: ['windows-latest', 'ubuntu-18.04', 'macos-latest']
       fail-fast: false
 
     steps:
