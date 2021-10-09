@@ -4,6 +4,6 @@ wget https://golang.org/dl/go1.16.7.linux-amd64.tar.gz
 tar -xzf go1.16.7.linux-amd64.tar.gz
 ln -s $(pwd)/go/bin/go $HOME/.local/bin/go
 
-pip install uuoskit
+python3.7 -m pip install https://github.com/uuosio/UUOSKit/releases/download/v1.0.1/uuoskit-1.0.1-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
 pip install gscdk==0.1.5
 
