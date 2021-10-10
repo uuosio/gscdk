@@ -20,6 +20,7 @@ setup(
     description="Go Smart Contract Development Kit",
     author='The UUOSIO Team',
     license="BSD-3-Clause",
+    url="https://github.com/uuosio/uuosio.gscdk",
     packages=['gscdk'],
     package_dir={'gscdk': 'pysrc'},
     package_data={
