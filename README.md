@@ -66,6 +66,12 @@ func (c *MyContract) SayHello(name string) {
 }
 ```
 
+
+# Installation
+```bash
+pip install gscdk
+```
+
 # Build Go Smart Contracts Compiler
 
 Follow the steps in [Building](./BUILDING.md)
