@@ -20,7 +20,7 @@ for root, dirs, files in os.walk("pysrc/eosio.cdt"):
 
 setup(
     name="gscdk",
-    version="0.1.6",
+    version="0.2.0",
     description="Go Smart Contract Development Kit",
     author='The UUOSIO Team',
     license="BSD-3-Clause",
