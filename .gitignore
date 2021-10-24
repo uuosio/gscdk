@@ -1,3 +1,5 @@
+pysrc/eosio.cdt
+pysrc/tinygo
 build
 _skbuild
 dist

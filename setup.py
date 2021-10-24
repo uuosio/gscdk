@@ -12,7 +12,11 @@ for root, dirs, files in os.walk("pysrc/tinygo"):
     for f in files:
         release_files.append(os.path.join(root.replace('pysrc/', ''), f))    
 
-print(release_files)
+for root, dirs, files in os.walk("pysrc/eosio.cdt"):
+    for f in files:
+        release_files.append(os.path.join(root.replace('pysrc/', ''), f))    
+
+# print(release_files)
 
 setup(
     name="gscdk",
