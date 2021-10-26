@@ -1,7 +1,3 @@
 [submodule "compiler"]
 	path = tinygo
 	url = https://github.com/uuosio/tinygo
-[submodule "eosio.cdt"]
-	path = eosio.cdt
-	url = https://github.com/uuosio/eosio.cdt
-	branch = gscdk
