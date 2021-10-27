@@ -21,6 +21,36 @@ def run_tinygo():
         cmd[0] = tinygo
         return subprocess.call(cmd, stdout=sys.stdout, stderr=sys.stderr)
 
+def run_command(cmd):
+    dir_name = os.path.dirname(os.path.realpath(__file__))
+    dir_name = os.path.join(dir_name, "tinygo")
+    tinygo = os.path.join(dir_name, 'bin/tinygo')
+    cmd = sys.argv[:]
+    cmd[0] = tinygo
+    cmd.insert(1, cmd)
+    return subprocess.call(cmd, stdout=sys.stdout, stderr=sys.stderr)
+
+def run_clang():
+    return run_command('clang')
+
+def run_wasm_ld():
+    return run_command('wasm-ld')
+
+def run_ld_lld():
+    return run_command('ld.lld')
+
+def run_dlltool():
+    return run_command('dlltool')
+
+def run_ranlib():
+    return run_command('ranlib')
+
+def run_lib():
+    return run_command('lib')
+
+def run_ar():
+    return run_command('ar')
+
 def run_eosio_cpp():
     dir_name = os.path.dirname(os.path.realpath(__file__))
     dir_name = os.path.join(dir_name, "eosio.cdt")
