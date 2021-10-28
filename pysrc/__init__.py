@@ -21,13 +21,13 @@ def run_tinygo():
         cmd[0] = tinygo
         return subprocess.call(cmd, stdout=sys.stdout, stderr=sys.stderr)
 
-def run_command(cmd):
+def run_command(tool):
     dir_name = os.path.dirname(os.path.realpath(__file__))
     dir_name = os.path.join(dir_name, "tinygo")
     tinygo = os.path.join(dir_name, 'bin/tinygo')
     cmd = sys.argv[:]
     cmd[0] = tinygo
-    cmd.insert(1, cmd)
+    cmd.insert(1, tool)
     return subprocess.call(cmd, stdout=sys.stdout, stderr=sys.stderr)
 
 def run_clang():
