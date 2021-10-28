@@ -1,1 +1,4 @@
 Release v0.2.0
+1. Show warnings on large packages
+2. Support for compiling C++ source code
+3. Improved code generation, reduced binary code size.
