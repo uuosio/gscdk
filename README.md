@@ -84,36 +84,11 @@ That will build tinygo command in compiler/build directory that support for buil
 export PATH=$(pwd)/compiler/build:$PATH
 ```
 
-# Install from Pre-built Binary
+# eosio-go
 
-First download binary file from [releases](https://github.com/uuosio/uuosio.gscdk/releases)
+## Initialize a project with "init" subcommand
 
-For tar.gz file
-
-```bash
-tar -C /usr/local -xzf uuosio.gscdk-linux-0.1.0.tar.gz
-export PATH=/usr/local/uuosio.gscdk/bin:$PATH
-```
-
-Install through a Python wheel package
-
-```bash
-python3 -m pip install https://github.com/uuosio/uuosio.gscdk/releases/download/v0.1.2/gscdk-0.1.0-py3-none-manylinux1_x86_64.whl
-```
-Change the wheel package download url as you need.
-
-
-Install debian package directly on Ubuntu platform
-
-```bash
-sudo apt install ./uuosio.gscdk-linux-0.1.0.deb
-```
-
-# eosio-go Command
-
-## Init Command
-
-Init command initialize a project with contract name
+"init" command initialize a project with contract name
 
 ```
 eosio-go init mycontract
@@ -128,9 +103,9 @@ eosio-go gencode
 
 Code generation is also the default option for "build" command
 
-## Build Command
+## Build Go Smart Contracts Project
 
-#### Compile Source Code
+#### Compiling the Source Code
 
 ```bash
 eosio-go build -o mycontract.wasm .
