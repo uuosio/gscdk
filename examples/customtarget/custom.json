@@ -1,0 +1,13 @@
+{
+	"inherits": ["eosio"],
+	"build-tags": ["say_hello"],
+	"cflags": [
+		"-DNAME=\"bob\""
+	],
+	"cxxflags": [
+		"-I./include"
+	],
+	"ldflags": [
+		"-zstack-size=1024"
+	]
+}
