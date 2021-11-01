@@ -15,10 +15,10 @@ jobs:
       run:
         shell: bash
     env:
-      GSCDK_VERSION: v0.2.0
+      GSCDK_VERSION: v0.2.1
     strategy:
       matrix:
-        python-version: [3.7, 3.8, 3.9]
+        python-version: [3.9]
         os: ['windows-latest', 'ubuntu-18.04', 'macos-latest']
         # python-version: [3.9]
       fail-fast: false
@@ -93,6 +93,7 @@ jobs:
           python -m pip install wheel
       - name: Build uuosio.gscdk
         run: |
+          cp -r tinygo/build/release/tinygo ./pysrc
           python setup.py sdist bdist_wheel --plat-name ${{ steps.platname.outputs.value }} > setup.log
       - name: get whl file
         id: whlfile
