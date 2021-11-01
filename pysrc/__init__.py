@@ -2,6 +2,7 @@ import os
 import sys
 import subprocess
 import shlex
+import platform
 
 __version__ = "0.2.1"
 
@@ -29,6 +30,8 @@ def run_command(tool):
     tinygo = os.path.join(dir_name, 'bin/tinygo')
     cmd = sys.argv[:]
     cmd[0] = tinygo
+    if platform.system() == 'Windows':
+        tool += '.exe'
     cmd.insert(1, tool)
     return subprocess.call(cmd, stdout=sys.stdout, stderr=sys.stderr)
 
