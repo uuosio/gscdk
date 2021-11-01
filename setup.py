@@ -8,9 +8,9 @@ from distutils.core import setup
 from distutils.sysconfig import get_python_lib
 import glob
 
-if os.path.exists('pysrc/tinygo'):
-    shutil.rmtree('pysrc/tinygo')
-shutil.copytree('tinygo/build/release/tinygo', 'pysrc/tinygo')
+# if os.path.exists('pysrc/tinygo'):
+#     shutil.rmtree('pysrc/tinygo')
+# shutil.copytree('tinygo/build/release/tinygo', 'pysrc/tinygo')
 
 release_files = []
 for root, dirs, files in os.walk("pysrc/tinygo"):
