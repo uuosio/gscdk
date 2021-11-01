@@ -1,4 +1,2 @@
-Release v0.2.0
-1. Show warnings on large packages
-2. Support for compiling C++ source code
-3. Improved code generation, reduced binary code size.
+Release v0.2.1
+1. Use memory functions defined in go for keeping code consistent

@@ -3,6 +3,8 @@ import sys
 import subprocess
 import shlex
 
+__version__ = "0.2.1"
+
 def run_tinygo():
     dir_name = os.path.dirname(os.path.realpath(__file__))
     dir_name = os.path.join(dir_name, "tinygo")
