@@ -68,8 +68,27 @@ func (c *MyContract) SayHello(name string) {
 
 
 # Installation
+
 ```bash
-pip install gscdk
+python3 -m pip install gscdk
+```
+
+For Windows platform:
+
+```bash
+python -m pip install gscdk
+```
+
+### Upgrade From an Old Version
+
+```bash
+python3 -m pip install --upgrade gscdk
+```
+
+For Windows platform:
+
+```bash
+python -m pip install --upgrade gscdk
 ```
 
 # Build Go Smart Contracts Compiler
