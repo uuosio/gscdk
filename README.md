@@ -66,7 +66,6 @@ func (c *MyContract) SayHello(name string) {
 }
 ```
 
-
 # Installation
 
 ```bash
@@ -91,13 +90,25 @@ For Windows platform:
 python -m pip install --upgrade gscdk
 ```
 
-# Build Go Smart Contracts Compiler
+### Installing gscdk in Docker
+
+Building docker image for gscdk
+
+```
+docker build github.com/uuosio/gscdk-docker#main -t gscdk/test
+```
+
+Running
+
+```
+docker run -w /root/dev -it --rm -v "$(pwd)":/root/dev -t gscdk/test /bin/bash
+```
+
+# Building Go Smart Contracts Compiler
 
 Follow the steps in [Building](./BUILDING.md)
 
 That will build tinygo command in compiler/build directory that support for building Go Smart Contracts.
-
-#### Set PATH
 
 ```bash
 export PATH=$(pwd)/compiler/build:$PATH
@@ -105,7 +116,7 @@ export PATH=$(pwd)/compiler/build:$PATH
 
 # eosio-go
 
-## Initialize a project with "init" subcommand
+## Initializing a project with "init" subcommand
 
 "init" command initialize a project with contract name
 
@@ -122,7 +133,7 @@ eosio-go gencode
 
 Code generation is also the default option for "build" command
 
-## Build Go Smart Contracts Project
+## Building Go Smart Contracts Project
 
 #### Compiling the Source Code
 
