@@ -1,6 +1,6 @@
-github.com/uuosio/chain v0.0.0-20210906091424-331d7494df2a h1:8BmCJvq9G2XUMMcuom14ww20d7r9EfYiYaCdTKUXZco=
-github.com/uuosio/chain v0.0.0-20210906091424-331d7494df2a/go.mod h1:Ap98MHUzcpbLkm+fVldVl6UCUBJxZ+yPkat+apJtHMk=
-github.com/uuosio/chain v0.0.0-20210907024550-ecfb25ad6ce9 h1:yBBm51qsarnOWCoNlizO0K0DSZDevY4c0/BxbluHYFM=
-github.com/uuosio/chain v0.0.0-20210907024550-ecfb25ad6ce9/go.mod h1:Ap98MHUzcpbLkm+fVldVl6UCUBJxZ+yPkat+apJtHMk=
 github.com/uuosio/chain v0.0.0-20211001040205-714cabbfda67 h1:nerHQMZKMgFWgFHmBsds6IcOEFxjEYpfNcNppFNl5jw=
 github.com/uuosio/chain v0.0.0-20211001040205-714cabbfda67/go.mod h1:Ap98MHUzcpbLkm+fVldVl6UCUBJxZ+yPkat+apJtHMk=
+github.com/uuosio/chain v0.1.2-0.20211103110251-a6eaebf6817e h1:9Mod4sgNo0m9U/UypQP/+MHIpq0SgMFVmuhZ3/iPBbg=
+github.com/uuosio/chain v0.1.2-0.20211103110251-a6eaebf6817e/go.mod h1:Ap98MHUzcpbLkm+fVldVl6UCUBJxZ+yPkat+apJtHMk=
+github.com/uuosio/chain v0.1.2-0.20211113025709-5f1e320056cc h1:DyJhXhT012CpLDpcdyRWTJl5Ccd7FilZzvi945IEuoI=
+github.com/uuosio/chain v0.1.2-0.20211113025709-5f1e320056cc/go.mod h1:Ap98MHUzcpbLkm+fVldVl6UCUBJxZ+yPkat+apJtHMk=

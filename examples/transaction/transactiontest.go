@@ -18,21 +18,22 @@ func NewContract(receiver, firstReceiver, action chain.Name) *TransactionTest {
 func (test *TransactionTest) SayHello() {
 	payer := chain.NewName("helloworld11")
 
-	a := chain.Action{}
-	a.Account = chain.NewName("eosio.token")
-	a.Name = chain.NewName("transfer")
-	a.AddPermission(chain.NewName("helloworld11"), chain.ActiveName)
-
 	t := chain.Transfer{
 		chain.NewName("helloworld11"),
 		chain.NewName("eosio"),
 		chain.Asset{10000, chain.NewSymbol("EOS", 4)},
 		"hello,world",
 	}
-	a.Data = t.Pack()
+
+	a := chain.NewAction(
+		chain.PermissionLevel{chain.NewName("helloworld11"), chain.ActiveName},
+		chain.NewName("eosio.token"),
+		chain.NewName("transfer"),
+		&t,
+	)
 
 	tx := chain.NewTransaction(1)
-	tx.Actions = []chain.Action{a}
+	tx.Actions = []*chain.Action{a}
 	tx.Send(1, false, payer)
 	chain.Println("transaction sent")
 }
