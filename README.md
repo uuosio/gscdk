@@ -81,7 +81,7 @@ python -m pip install --upgrade gscdk
 Building docker image for gscdk
 
 ```
-docker build github.com/uuosio/gscdk-docker#main -t gscdk/test
+docker build github.com/learnforpractice/gscdk-docker#main -t gscdk/test
 ```
 
 Running
