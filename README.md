@@ -1,19 +1,5 @@
 Go Smart Contracts Development Kit
 
-# Quick Start
-
-<h3>
-  <a
-    target="_blank"
-    href="https://mybinder.org/v2/gh/uuosio/uuosio.gscdk/main?filepath=quickstart/quickstart.ipynb"
-  >
-    Quick Start
-    <img alt="Binder" valign="bottom" height="25px"
-    src="https://mybinder.org/badge_logo.svg"
-    />
-  </a>
-</h3>
-
 # What the Go Smart Contracts look like?
 
 Here is an example
