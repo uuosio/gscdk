@@ -14,7 +14,7 @@ func NewContract(receiver, firstReceiver, action chain.Name) *Contract {
 }
 
 //action inc
-func (c *Contract) Increase(name string) {
+func (c *Contract) Increase() {
 	db := NewCounterDB(c.self, c.self)
 	item := db.Get()
 	if item == nil {
@@ -22,5 +22,5 @@ func (c *Contract) Increase(name string) {
 	}
 	item.count += 1
 	db.Set(item, c.self)
-	chain.Println("+++item:", item.count)
+	chain.Println("+++count:", item.count)
 }
