@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/uuosio/chain"
-	"github.com/uuosio/chain/logger"
 )
 
 //table mytable
@@ -31,14 +30,14 @@ func (c *MyContract) SayHello(name string) {
 	primary := uint64(111)
 	it, data := mydb.Get(primary)
 	if !it.IsOk() {
-		logger.Println("Welcome new friend", name)
+		chain.Println("Welcome new friend", name)
 		data := &MyData{primary, name}
 		mydb.Store(data, payer)
 	} else {
 		if data.name != name {
-			logger.Println("Welcome new friend:", name)
+			chain.Println("Welcome new friend:", name)
 		} else {
-			logger.Println("Welcome old friend", name)
+			chain.Println("Welcome old friend", name)
 		}
 		data.name = name
 		mydb.Update(it, data, payer)
