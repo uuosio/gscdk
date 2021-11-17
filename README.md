@@ -35,12 +35,7 @@ func (c *MyContract) SayHello(name string) {
 	payer := c.Receiver
 	mydb := NewMyDataDB(code, scope)
 	primary := uint64(111)
-	it, data := mydb.Get(primary)
-	if !it.IsOk() {
-		chain.Println("Welcome new friend", name)
-		data := &MyData{primary, name}
-		mydb.Store(data, payer)
-	} else {
+	if it, data := mydb.Get(primary); it.IsOk() {
 		if data.name != name {
 			chain.Println("Welcome new friend:", name)
 		} else {
@@ -48,6 +43,10 @@ func (c *MyContract) SayHello(name string) {
 		}
 		data.name = name
 		mydb.Update(it, data, payer)
+	} else {
+		chain.Println("Welcome new friend", name)
+		data := &MyData{primary, name}
+		mydb.Store(data, payer)
 	}
 }
 ```
