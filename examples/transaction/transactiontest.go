@@ -14,11 +14,19 @@ func NewContract(receiver, firstReceiver, action chain.Name) *TransactionTest {
 	return &TransactionTest{receiver, firstReceiver, action}
 }
 
+//packer
+type Transfer struct {
+	From     chain.Name
+	To       chain.Name
+	Quantity chain.Asset
+	Memo     string
+}
+
 //action sayhello
 func (test *TransactionTest) SayHello() {
 	payer := chain.NewName("helloworld11")
 
-	t := chain.Transfer{
+	t := Transfer{
 		chain.NewName("helloworld11"),
 		chain.NewName("eosio"),
 		chain.Asset{10000, chain.NewSymbol("EOS", 4)},

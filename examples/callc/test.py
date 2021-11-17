@@ -17,7 +17,7 @@ eosapi.set_node('https://testnode.uuos.network:8443')
 
 with open('hello.wasm', 'rb') as f:
     code = f.read()
-abi = ''
+abi = b''
 
 try:
     eosapi.deploy_contract(test_account1, code, abi, vm_type=0)
@@ -25,5 +25,5 @@ except ChainException as e:
     if not e.json['error']['details'][0]['message'] == 'contract is already running this version of code':
         raise e
 
-r = eosapi.push_action(test_account1, 'inc', '')
+r = eosapi.push_action(test_account1, 'sayhello', '')
 print(r['processed']['action_traces'][0]['console'])

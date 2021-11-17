@@ -1,6 +1,8 @@
 
 import os
 import sys
+import time
+
 try:
 	from pyeoskit import eosapi, wallet
 except:
@@ -15,7 +17,7 @@ wallet.import_key('test', '5JRYimgLBrRLCBAcjHUWCYRv3asNedTYYzVgmiU4q2ZVxMBiJXL')
 # modify test node here
 eosapi.set_node('https://testnode.uuos.network:8443')
 
-with open('hello.wasm', 'rb') as f:
+with open('test.wasm', 'rb') as f:
     code = f.read()
 abi = ''
 
@@ -25,5 +27,10 @@ except ChainException as e:
     if not e.json['error']['details'][0]['message'] == 'contract is already running this version of code':
         raise e
 
-r = eosapi.push_action(test_account1, 'inc', '')
+balance = eosapi.get_balance(test_account1)
+print('+++++balance:', balance)
+r = eosapi.push_action(test_account1, 'sayhello', '')
 print(r['processed']['action_traces'][0]['console'])
+time.sleep(3)
+balance = eosapi.get_balance(test_account1)
+print('+++++balance:', balance)

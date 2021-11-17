@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/uuosio/chain"
-	"github.com/uuosio/chain/logger"
+	"github.com/uuosio/chain/database"
 )
 
 //table mydata
@@ -14,19 +14,20 @@ type MyData struct {
 
 //contract mycontract
 type MyContract struct {
+	self          chain.Name
+	firstReceiver chain.Name
+	action        chain.Name
 }
 
 func NewContract(receiver, firstReceiver, action chain.Name) *MyContract {
-	return &MyContract{}
+	return &MyContract{receiver, firstReceiver, action}
 }
 
 //action sayhello
 func (t *MyContract) SayHello() {
-	code := chain.NewName("hello")
-	scope := chain.NewName("helloo")
-	payer := code
+	payer := t.self
 
-	mi := NewMyDataDB(code, scope)
+	mi := NewMyDataDB(t.self, t.self)
 	primary := uint64(1000)
 
 	if it, data := mi.Get(primary); it.IsOk() {
@@ -45,22 +46,23 @@ func (t *MyContract) SayHello() {
 
 	secondary := uint64(0)
 	{
+		var it database.SecondaryIterator
 		idxDB := mi.GetIdxDBbya1()
-		it, secondary := idxDB.FindByPrimary(primary)
+		it, secondary = idxDB.FindByPrimary(primary)
 		chain.Check(it.IsOk(), "Invalid secondary iterator")
 		secondary += 1
-		logger.Println(idxDB.GetIndex(), it.I, it.Primary, secondary)
+		chain.Println(idxDB.GetIndex(), it.I, it.Primary, secondary)
 		if it.IsOk() {
 			mi.IdxUpdate(it, secondary, payer)
 		}
 	}
-
+	chain.Println("++++++++secondary:", secondary)
 	{
 		idxDB := mi.GetIdxDB("bya1")
 		it := idxDB.Find(secondary)
 		chain.Check(it.IsOk(), "Invalid secondary iterator")
 		secondary += 1
-		logger.Println(idxDB.GetIndex(), it.I, it.Primary, secondary)
+		chain.Println(idxDB.GetIndex(), it.I, it.Primary, secondary)
 		if it.IsOk() {
 			mi.IdxUpdate(it, secondary, payer)
 		}

@@ -28,11 +28,11 @@ func (t *MyContract) SayHello() {
 
 	data := db.Get()
 	if data != nil {
-		println("+++a1:", data.a1)
 		data.a1 += 1
 		db.Set(data, payer)
 	} else {
-		s := MySingleton{}
-		db.Set(&s, payer)
+		data = &MySingleton{}
+		db.Set(data, payer)
 	}
+	chain.Println("++data.a1:", data.a1)
 }
