@@ -4,6 +4,7 @@ import (
 	"github.com/uuosio/chain"
 )
 
+//packer
 type Transfer struct {
 	From     chain.Name
 	To       chain.Name

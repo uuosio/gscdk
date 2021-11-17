@@ -8,3 +8,5 @@ github.com/uuosio/chain v0.1.1-0.20211023120950-b3693be48fd9 h1:uWQuBWdwZX9PHJSO
 github.com/uuosio/chain v0.1.1-0.20211023120950-b3693be48fd9/go.mod h1:Ap98MHUzcpbLkm+fVldVl6UCUBJxZ+yPkat+apJtHMk=
 github.com/uuosio/chain v0.1.1-0.20211028040416-80fd51243fe4 h1:YiaNNaNoypsage7MHNHQ+DjANBoi4XtZ85Oa1ffbGn8=
 github.com/uuosio/chain v0.1.1-0.20211028040416-80fd51243fe4/go.mod h1:Ap98MHUzcpbLkm+fVldVl6UCUBJxZ+yPkat+apJtHMk=
+github.com/uuosio/chain v0.1.2 h1:yuXQKeTZ+1F7Gvtb27QXsqbH/ZaK5YUWJyl3SEWyH7o=
+github.com/uuosio/chain v0.1.2/go.mod h1:Ap98MHUzcpbLkm+fVldVl6UCUBJxZ+yPkat+apJtHMk=
