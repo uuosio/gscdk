@@ -14,7 +14,7 @@ def run_tinygo():
         return subprocess.call(tinygo, stdout=sys.stdout, stderr=sys.stderr)
     elif sys.argv[1] == "build":
         cmd = [tinygo]
-        args = 'build -x -gc=leaking -target eosio -wasm-abi=generic -scheduler=none -opt z -tags=math_big_pure_go'
+        args = 'build -gc=leaking -target eosio -wasm-abi=generic -scheduler=none -opt z -tags=math_big_pure_go'
         args = shlex.split(args)
         cmd.extend(args)
         cmd.extend(sys.argv[2:])
