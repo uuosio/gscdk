@@ -1,1 +1,1 @@
-eosio-go build -o eosio.wasm .
+eosio-go build -o test.wasm .
