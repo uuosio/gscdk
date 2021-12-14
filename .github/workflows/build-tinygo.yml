@@ -15,7 +15,7 @@ jobs:
       run:
         shell: bash
     env:
-      GSCDK_VERSION: v0.2.1
+      GSCDK_VERSION: v0.3.0
     strategy:
       matrix:
         python-version: [3.9]
@@ -91,6 +91,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install wheel
+          python -m pip install twine
       - name: Build uuosio.gscdk
         run: |
           cp -r tinygo/build/release/tinygo ./pysrc
@@ -106,6 +107,12 @@ jobs:
         working-directory: tinygo
         run: |
           cd tests/eosio/testcpp;go get -u -d github.com/uuosio/chain@master;./build.sh
+      - name: Publish a Python distribution to PyPI
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
       - name: release-tinygo
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')

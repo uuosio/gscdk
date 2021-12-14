@@ -1,2 +1,2 @@
-Release v0.2.1
-1. Use memory functions defined in go for keeping code consistent
+Release v0.3.0
+1. Update tinygo to version 0.21.0
