@@ -30,3 +30,4 @@ except ChainException as e:
 r = eosapi.transfer(test_account2, test_account1, 0.1, 'hello,world')
 print(r['processed']['action_traces'][0]['inline_traces'][1]['console'])
 balance = eosapi.get_balance(test_account1)
+print(r['processed']['elapsed'])
