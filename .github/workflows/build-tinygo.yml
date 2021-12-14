@@ -19,8 +19,9 @@ jobs:
     strategy:
       matrix:
         python-version: [3.9]
-        os: ['windows-latest', 'ubuntu-18.04', 'macos-latest']
+        # os: ['windows-latest', 'ubuntu-18.04', 'macos-latest']
         # python-version: [3.9]
+        os: ['ubuntu-18.04']
       fail-fast: false
 
     steps:
@@ -115,12 +116,14 @@ jobs:
             ./dist/${{ steps.whlfile.outputs.value }}
 
       - name: Downloading whl files
-        if: startsWith(github.ref, 'refs/tags/') && ${{ matrix.os == 'ubuntu-18.04' }}
+        if: ${{ startsWith(github.ref, 'refs/tags/') && matrix.os == 'ubuntu-18.04' }}
         working-directory: dist
         run: |
           python ../scripts/download.py
+          rm gscdk-0.3.0-py3-none-macosx_10_15_x86_64.whl
+          rm gscdk-0.3.0-py3-none-manylinux1_x86_64.whl
       - name: Publish a Python distribution to PyPI
-        if: startsWith(github.ref, 'refs/tags/') && ${{ matrix.os == 'ubuntu-18.04' }}
+        if: ${{ startsWith(github.ref, 'refs/tags/') && matrix.os == 'ubuntu-18.04' }}
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: __token__
