@@ -107,15 +107,21 @@ jobs:
         working-directory: tinygo
         run: |
           cd tests/eosio/testcpp;go get -u -d github.com/uuosio/chain@master;./build.sh
-      - name: Publish a Python distribution to PyPI
-        if: startsWith(github.ref, 'refs/tags/')
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          user: __token__
-          password: ${{ secrets.PYPI_API_TOKEN }}
       - name: release-tinygo
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
             ./dist/${{ steps.whlfile.outputs.value }}
+
+      - name: Downloading whl files
+        if: startsWith(github.ref, 'refs/tags/') && ${{ matrix.os == 'ubuntu-18.04' }}
+        working-directory: dist
+        run: |
+          python ../scripts/download.py
+      - name: Publish a Python distribution to PyPI
+        if: startsWith(github.ref, 'refs/tags/') && ${{ matrix.os == 'ubuntu-18.04' }}
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
