@@ -4,6 +4,7 @@ import (
 	"github.com/uuosio/chain"
 )
 
+//contract test
 type TransactionTest struct {
 	Receiver      chain.Name
 	FirstReceiver chain.Name
