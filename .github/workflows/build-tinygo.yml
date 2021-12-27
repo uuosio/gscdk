@@ -19,9 +19,9 @@ jobs:
     strategy:
       matrix:
         python-version: [3.9]
-        # os: ['windows-latest', 'ubuntu-18.04', 'macos-latest']
+        os: ['windows-latest', 'ubuntu-18.04', 'macos-latest']
         # python-version: [3.9]
-        os: ['ubuntu-18.04']
+        # os: ['ubuntu-18.04']
       fail-fast: false
 
     steps:
