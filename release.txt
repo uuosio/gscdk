@@ -1,2 +1,3 @@
-Release v0.3.0
-1. Update tinygo to version 0.21.0
+Release v0.3.1
+1. Update code template
+
