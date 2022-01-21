@@ -9,7 +9,7 @@ type MySingleton struct {
 	a1 uint64
 }
 
-//contract mycontract
+//contract test
 type MyContract struct {
 	Receiver      chain.Name
 	FirstReceiver chain.Name
@@ -20,8 +20,8 @@ func NewContract(receiver, firstReceiver, action chain.Name) *MyContract {
 	return &MyContract{receiver, firstReceiver, action}
 }
 
-//action sayhello
-func (t *MyContract) SayHello() {
+//action test
+func (t *MyContract) Test() {
 	code := t.Receiver
 	payer := t.Receiver
 	db := NewMySingletonDB(code, code)

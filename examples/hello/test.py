@@ -1,27 +1,34 @@
 import os
-from pyeoskit import eosapi, wallet
-from pyeoskit import log
+import sys
+import json
+import time
+
+from ipyeos import log
+from ipyeos.chaintester import ChainTester
+
+test_dir = os.path.dirname(__file__)
 logger = log.get_logger(__name__)
 
-test_account1 = 'helloworld11'
-test_account2 = 'helloworld12'
+tester = ChainTester()
 
-# active key of helloworld11
-wallet.import_key('test', '5JRYimgLBrRLCBAcjHUWCYRv3asNedTYYzVgmiU4q2ZVxMBiJXL', False)
-wallet.import_key('test', '5Jbb4wuwz8MAzTB9FJNmrVYGXo4ABb7wqPVoWGcZ6x8V2FwNeDo', False)
-# active key of helloworld12
-wallet.import_key('test', '5JHRxntHapUryUetZgWdd3cg6BrpZLMJdqhhXnMaZiiT4qdJPhv', False)
+def read_code_and_abi():
+    files = os.listdir(test_dir)
+    abi = None
+    code = None
+    for file in files:
+        if file.endswith('.wasm'):
+            file = os.path.join(test_dir, file)
+            with open(file, 'rb') as f:
+                code = f.read()
+        elif file.endswith('.abi'):
+            file = os.path.join(test_dir, file)
+            with open(file, 'r') as f:
+                abi = json.load(f)
+    return code, abi
 
-eosapi.set_node('https://testnode.uuos.network:8443')
-
-with open('hello.go', 'r') as f:
-    code = f.read()
-code, abi = eosapi.compile('hello', code, src_type=2)
-
-try:
-    eosapi.deploy_contract(test_account1, code, abi, vm_type=0)
-except Exception as e:
-    print(e.json['error']['what'])
-
-r = eosapi.push_action(test_account1, 'sayhello', {'name': 'alice'}, {'hello':'active'})
-print(r['processed']['action_traces'][0]['console'])
+def test_example():
+    code, abi = read_code_and_abi()
+    tester.deploy_contract('hello', code, abi, 0)
+    r = tester.push_action('hello', 'test', '')
+    logger.info(r['action_traces'][0]['console'])
+    tester.produce_block()

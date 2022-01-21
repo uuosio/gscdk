@@ -12,7 +12,7 @@ type MyData struct {
 	a2      chain.Uint128 //IDX128: bya2 : t.a2 : t.a2=%v
 }
 
-//contract mycontract
+//contract test
 type MyContract struct {
 	self          chain.Name
 	firstReceiver chain.Name
@@ -23,8 +23,8 @@ func NewContract(receiver, firstReceiver, action chain.Name) *MyContract {
 	return &MyContract{receiver, firstReceiver, action}
 }
 
-//action sayhello
-func (t *MyContract) SayHello() {
+//action test
+func (t *MyContract) Test() {
 	payer := t.self
 
 	mi := NewMyDataDB(t.self, t.self)

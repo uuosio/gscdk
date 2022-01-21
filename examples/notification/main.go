@@ -4,7 +4,7 @@ import (
 	"github.com/uuosio/chain"
 )
 
-//contract hello
+//contract test
 type MyContract struct {
 	Self          chain.Name
 	FirstReceiver chain.Name

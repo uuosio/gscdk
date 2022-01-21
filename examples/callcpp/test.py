@@ -1,29 +1,34 @@
-
 import os
 import sys
-try:
-	from pyeoskit import eosapi, wallet
-except:
-	print('pyeoskit not found, please install it with "pip install pyeoskit"')
-	sys.exit(-1)
-from pyeoskit.exceptions import ChainException
+import json
+import time
 
-# modify your test account here
-test_account1 = 'helloworld11'
-# modify your test account private key here
-wallet.import_key('test', '5JRYimgLBrRLCBAcjHUWCYRv3asNedTYYzVgmiU4q2ZVxMBiJXL')
-# modify test node here
-eosapi.set_node('https://testnode.uuos.network:8443')
+from ipyeos import log
+from ipyeos.chaintester import ChainTester
 
-with open('test.wasm', 'rb') as f:
-    code = f.read()
-abi = b''
+test_dir = os.path.dirname(__file__)
+logger = log.get_logger(__name__)
 
-try:
-    eosapi.deploy_contract(test_account1, code, abi, vm_type=0)
-except ChainException as e:
-    if not e.json['error']['details'][0]['message'] == 'contract is already running this version of code':
-        raise e
+tester = ChainTester()
 
-r = eosapi.push_action(test_account1, 'sayhello', '')
-print(r['processed']['action_traces'][0]['console'])
+def read_code_and_abi():
+    files = os.listdir(test_dir)
+    abi = None
+    code = None
+    for file in files:
+        if file.endswith('.wasm'):
+            file = os.path.join(test_dir, file)
+            with open(file, 'rb') as f:
+                code = f.read()
+        elif file.endswith('.abi'):
+            file = os.path.join(test_dir, file)
+            with open(file, 'r') as f:
+                abi = json.load(f)
+    return code, abi
+
+def test_example():
+    code, abi = read_code_and_abi()
+    tester.deploy_contract('hello', code, abi, 0)
+    r = tester.push_action('hello', 'test', '')
+    logger.info(r['action_traces'][0]['console'])
+    tester.produce_block()

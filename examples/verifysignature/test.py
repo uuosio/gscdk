@@ -2,24 +2,34 @@ import os
 import sys
 import json
 import time
-import uuid
 import hashlib
-
-test_dir = os.path.dirname(__file__)
-sys.path.append(os.path.join(test_dir, '..'))
 
 from ipyeos import log
 from ipyeos.chaintester import ChainTester
 from pyeoskit import eosapi
 
+test_dir = os.path.dirname(__file__)
 logger = log.get_logger(__name__)
+
 tester = ChainTester()
 
-def test_event():
-    with open('verifier.wasm', 'rb') as f:
-        code = f.read()
-    with open('verifier.abi', 'r') as f:
-        abi = f.read()
+def read_code_and_abi():
+    files = os.listdir(test_dir)
+    abi = None
+    code = None
+    for file in files:
+        if file.endswith('.wasm'):
+            file = os.path.join(test_dir, file)
+            with open(file, 'rb') as f:
+                code = f.read()
+        elif file.endswith('.abi'):
+            file = os.path.join(test_dir, file)
+            with open(file, 'r') as f:
+                abi = json.load(f)
+    return code, abi
+
+def test_example():
+    code, abi = read_code_and_abi()
     tester.deploy_contract('hello', code, abi, 0)
 
     data = 'hello world'
@@ -32,9 +42,6 @@ def test_event():
         'public_key': public_key,
         'signature': signature,
     }
-    for i in range(5):
-        r = tester.push_action('hello', 'verify', args)
-        print(r['elapsed'])
-        tester.produce_block()
-
-
+    r = tester.push_action('hello', 'verify', args)
+    logger.info(r['action_traces'][0]['console'])
+    tester.produce_block()

@@ -28,7 +28,7 @@ type MyTable4 struct {
 	name string
 }
 
-//contract mycontract
+//contract test
 type MyContract struct {
 	self          chain.Name
 	firstReceiver chain.Name

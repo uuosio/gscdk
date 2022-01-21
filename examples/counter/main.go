@@ -4,7 +4,7 @@ import (
 	"github.com/uuosio/chain"
 )
 
-//contract counter
+//contract test
 type Contract struct {
 	self, firstReceiver, action chain.Name
 }
@@ -13,8 +13,8 @@ func NewContract(receiver, firstReceiver, action chain.Name) *Contract {
 	return &Contract{receiver, firstReceiver, action}
 }
 
-//action inc
-func (c *Contract) Increase() {
+//action test
+func (c *Contract) Test() {
 	db := NewCounterDB(c.self, c.self)
 	item := db.Get()
 	if item == nil {

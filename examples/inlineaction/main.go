@@ -13,19 +13,20 @@ type Transfer struct {
 }
 
 func main() {
-	_, _, action := chain.GetApplyArgs()
-	if action == chain.NewName("sayhello") {
+	self, _, action := chain.GetApplyArgs()
+	if action == chain.NewName("test") {
 		t := Transfer{
-			From:     chain.NewName("helloworld11"),
+			From:     self,
 			To:       chain.NewName("eosio"),
 			Quantity: *chain.NewAsset(10000, chain.NewSymbol("EOS", 4)),
 			Memo:     "hello",
 		}
 		chain.NewAction(
-			&chain.PermissionLevel{chain.NewName("helloworld11"), chain.ActiveName},
+			&chain.PermissionLevel{self, chain.ActiveName},
 			chain.NewName("eosio.token"),
 			chain.NewName("transfer"),
 			&t,
 		).Send()
+		chain.Println("action sent!")
 	}
 }

@@ -15,4 +15,17 @@
 14. [token example](./token)
 15. [build code for debugging example](./codedebugging)
 
+# Run Examples
 
+## Install test dependencies
+
+```python
+python3 -m pip install ipyeos
+python3 -m pip install pyeoskit
+python3 -m pip install gscdk
+```
+## Run Test
+
+```
+make
+```

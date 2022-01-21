@@ -4,7 +4,7 @@ import (
 	"github.com/uuosio/chain"
 )
 
-//contract verifier
+//contract test
 type MyContract struct {
 	Receiver      chain.Name
 	FirstReceiver chain.Name
@@ -20,5 +20,5 @@ func (c *MyContract) Verify(data string, public_key *chain.PublicKey, signature 
 	digest := chain.Sha256([]byte(data))
 	recovered_pub := chain.RecoverKey(digest, signature)
 	chain.Assert(*recovered_pub == *public_key, "invalid signature")
-	chain.Println("verify success")
+	chain.Println("verify successful")
 }

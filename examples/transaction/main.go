@@ -6,7 +6,7 @@ import (
 
 //contract test
 type TransactionTest struct {
-	Receiver      chain.Name
+	self          chain.Name
 	FirstReceiver chain.Name
 	Action        chain.Name
 }
@@ -23,19 +23,19 @@ type Transfer struct {
 	Memo     string
 }
 
-//action sayhello
-func (test *TransactionTest) SayHello() {
-	payer := chain.NewName("helloworld11")
+//action test
+func (test *TransactionTest) Test() {
+	payer := test.self
 
 	t := Transfer{
-		chain.NewName("helloworld11"),
+		test.self,
 		chain.NewName("eosio"),
 		chain.Asset{10000, chain.NewSymbol("EOS", 4)},
 		"hello,world",
 	}
 
 	a := chain.NewAction(
-		&chain.PermissionLevel{chain.NewName("helloworld11"), chain.ActiveName},
+		&chain.PermissionLevel{test.self, chain.ActiveName},
 		chain.NewName("eosio.token"),
 		chain.NewName("transfer"),
 		&t,
