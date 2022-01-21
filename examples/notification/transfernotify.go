@@ -17,9 +17,14 @@ func NewContract(receiver, firstReceiver, action chain.Name) *MyContract {
 
 //notify transfer
 func (c *MyContract) Transfer(from, to chain.Name, quantity chain.Asset, memo string) {
-	if c.FirstReceiver == chain.NewName("eosio.token") && c.Action == chain.NewName("transfer") {
-		if to == c.Self && quantity.Symbol == chain.NewSymbol("EOS", 4) {
-			chain.Println("Example2, memo:", memo)
+	if to != c.Self {
+		return
+	}
+
+	if c.FirstReceiver == chain.NewName("eosio.token") &&
+		c.Action == chain.NewName("transfer") {
+		if quantity.Symbol == chain.NewSymbol("EOS", 4) {
+			chain.Println("Receive Eos, memo:", memo)
 		}
 	}
 }

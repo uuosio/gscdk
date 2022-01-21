@@ -2,3 +2,5 @@ github.com/uuosio/chain v0.0.0-20210915024614-5db61d8e9bd3 h1:GHWe7O7flEk4+LiMLm
 github.com/uuosio/chain v0.0.0-20210915024614-5db61d8e9bd3/go.mod h1:Ap98MHUzcpbLkm+fVldVl6UCUBJxZ+yPkat+apJtHMk=
 github.com/uuosio/chain v0.1.1 h1:63Z9U4E9VBea5yQZkTEYRzOLjAWcLRKGd+dT9qk5zVQ=
 github.com/uuosio/chain v0.1.1/go.mod h1:Ap98MHUzcpbLkm+fVldVl6UCUBJxZ+yPkat+apJtHMk=
+github.com/uuosio/chain v0.1.8 h1:/BCUQFTDLmbe3ISC7g1FIyTd5uQJqBitX5Kn6aCCLuw=
+github.com/uuosio/chain v0.1.8/go.mod h1:Ap98MHUzcpbLkm+fVldVl6UCUBJxZ+yPkat+apJtHMk=

@@ -35,7 +35,7 @@ func (test *TransactionTest) SayHello() {
 	}
 
 	a := chain.NewAction(
-		chain.PermissionLevel{chain.NewName("helloworld11"), chain.ActiveName},
+		&chain.PermissionLevel{chain.NewName("helloworld11"), chain.ActiveName},
 		chain.NewName("eosio.token"),
 		chain.NewName("transfer"),
 		&t,
@@ -43,6 +43,6 @@ func (test *TransactionTest) SayHello() {
 
 	tx := chain.NewTransaction(1)
 	tx.Actions = []*chain.Action{a}
-	tx.Send(1, false, payer)
+	tx.Send(chain.NewUint128(1, 0), false, payer)
 	chain.Println("transaction sent")
 }
