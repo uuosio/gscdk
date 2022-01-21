@@ -1,3 +1,6 @@
-Release v0.3.4
-1. Call chain.Finish at the end of running contract
-
+Release v0.3.5
+1. Add  attribute for ignore table from ABI
+2. Update cNewMultiIndexTemplate
+3. Throw error if singleton table defines primary and secondary keys explicitly
+4. Fix compile c++ source code
+5. Add support for tags in code generator

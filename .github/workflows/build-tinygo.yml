@@ -15,7 +15,7 @@ jobs:
       run:
         shell: bash
     env:
-      GSCDK_VERSION: 0.3.4
+      GSCDK_VERSION: 0.3.5
     strategy:
       matrix:
         python-version: [3.9]
