@@ -1,6 +1,3 @@
-Release v0.3.5
-1. Add  attribute for ignore table from ABI
-2. Update cNewMultiIndexTemplate
-3. Throw error if singleton table defines primary and secondary keys explicitly
-4. Fix compile c++ source code
-5. Add support for tags in code generator
+Release v0.4.0
+1. Update tinygo to v0.22.0
+

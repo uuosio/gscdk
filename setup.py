@@ -21,7 +21,7 @@ for root, dirs, files in os.walk("pysrc/tinygo"):
 
 setup(
     name="gscdk",
-    version="0.3.5",
+    version="0.4.0",
     description="Go Smart Contract Development Kit",
     author='The UUOSIO Team',
     license="BSD-3-Clause",
