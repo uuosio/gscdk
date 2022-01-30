@@ -24,8 +24,13 @@ python3 -m pip install ipyeos
 python3 -m pip install pyeoskit
 python3 -m pip install gscdk
 ```
-## Run Test
+
+## Build
 
 ```
 make
 ```
+
+## Run Test
+
+make test

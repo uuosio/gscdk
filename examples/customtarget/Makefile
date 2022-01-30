@@ -1,8 +1,8 @@
-all : test
+all : test.wasm
 
-build : main.go
+test.wasm : main.go
 	eosio-go build -target ./custom.json -o test.wasm
 
-test : build
+test : test.wasm
 	run-ipyeos -m pytest -x -s test.py
 
