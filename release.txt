@@ -1,5 +1,2 @@
-Release v0.4.2
-1. Add support for variant
-2. Refactor code generator
-
-
+Release v0.4.3
+1. Return iterator pointer
