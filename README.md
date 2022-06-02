@@ -113,7 +113,7 @@ cd mycontract
 ## Generating ABI and Extra Code for Smart Contracts
 
 ```
-eosio-go gencode
+eosio-go gencode -o generated.go .
 ```
 
 Code generation is also the default option for "build" command
