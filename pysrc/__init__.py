@@ -4,7 +4,7 @@ import subprocess
 import shlex
 import platform
 
-__version__ = "0.4.3"
+__version__ = "0.5.0"
 
 def run_tinygo():
     dir_name = os.path.dirname(os.path.realpath(__file__))
