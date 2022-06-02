@@ -39,15 +39,13 @@ jobs:
           scoop_update: 'false'
 #https://github.com/ScoopInstaller/Scoop/issues/4917
       - name: Install Dependencies
+        if: ${{ matrix.os == 'windows-latest' }}
         shell: bash
         run: |
           scoop bucket rm main
           scoop bucket add main
           scoop bucket add extras
           scoop install ninja
-      - name: Install wget
-        if: ${{ matrix.os == 'windows-latest' }}
-        run: |
           choco install wget --no-progress
       - name:  Download tinygo for windows
         if: ${{ matrix.os == 'windows-latest' }}
