@@ -34,35 +34,36 @@ jobs:
         with:
           submodules: recursive
       - uses: seanmiddleditch/gha-setup-ninja@master
+      - uses: brechtm/setup-scoop@v2
+        with:
+          scoop_update: 'false'
+#https://github.com/ScoopInstaller/Scoop/issues/4917
+      - name: Install Dependencies
+        shell: bash
+        run: |
+          scoop bucket rm main
+          scoop bucket add main
+          scoop bucket add extras
+          scoop install ninja
       - name: Install wget
         if: ${{ matrix.os == 'windows-latest' }}
         run: |
           choco install wget --no-progress
-      - name: Download llvm-build
-        working-directory: tinygo
+      - name:  Download tinygo for windows
+        if: ${{ matrix.os == 'windows-latest' }}
         run: |
-          wget https://github.com/uuosio/llvm-build-cache/releases/download/v14.0.0/llvm-build-${{ matrix.os }}.tar.gz
-          tar -xf llvm-build-${{ matrix.os }}.tar.gz
-      - name: Clone llvm-source
-        working-directory: tinygo
+          wget https://github.com/learnforpractice/tinygo/releases/download/v${{ env.GSCDK_VERSION }}/release-windows-2022.zip
+          7z x release-windows-2022.zip -o./pysrc
+      - name:  Download tinygo for linux
+        if: ${{ matrix.os == 'ubuntu-18.04' }}
         run: |
-          make llvm-source
-      - name: Build eosio-libs
-        working-directory: tinygo
-        run: make eosio-libs
-      - name: Build wasi-libc
-        working-directory: tinygo
-        run: make wasi-libc
-      - name: Build tinygo
-        working-directory: tinygo
+          wget https://github.com/learnforpractice/tinygo/releases/download/v${{ env.GSCDK_VERSION }}/tinygo.linux-amd64.tar.gz
+          tar -xf tinygo.linux-amd64.tar.gz -C ./pysrc
+      - name:  Download tinygo for macos
+        if: ${{ matrix.os == 'macos-latest' }}
         run: |
-          make
-          make release
-      - name: Testing
-        if: ${{ matrix.os != 'windows-latest' }}
-        working-directory: tinygo
-        run: |
-          ./build/tinygo help
+          wget https://github.com/learnforpractice/tinygo/releases/download/v${{ env.GSCDK_VERSION }}/tinygo.darwin-amd64.tar.gz
+          tar -xf tinygo.darwin-amd64.tar.gz -C ./pysrc
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -78,7 +79,6 @@ jobs:
           python -m pip install twine
       - name: Build uuosio.gscdk
         run: |
-          cp -r tinygo/build/release/tinygo ./pysrc
           python setup.py sdist bdist_wheel --plat-name ${{ steps.platname.outputs.value }} > setup.log
       - name: get whl file
         id: whlfile
@@ -97,7 +97,6 @@ jobs:
         with:
           files: |
             ./dist/${{ steps.whlfile.outputs.value }}
-
       - name: Downloading whl files
         if: ${{ startsWith(github.ref, 'refs/tags/') && matrix.os == 'ubuntu-18.04' }}
         working-directory: dist
