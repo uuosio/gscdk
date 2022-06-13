@@ -28,7 +28,7 @@ func (c *MyContract) Test(name string) {
 	payer := c.Receiver
 	mydb := NewMyDataDB(code, scope)
 	primary := uint64(111)
-	if it, data := mydb.Get(primary); it.IsOk() {
+	if it, data := mydb.GetByKey(primary); it.IsOk() {
 		if data.name != name {
 			chain.Println("Welcome new friend:", name)
 		} else {

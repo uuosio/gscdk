@@ -30,7 +30,7 @@ func (t *MyContract) Test() {
 	mi := NewMyDataDB(t.self, t.self)
 	primary := uint64(1000)
 
-	if it, data := mi.Get(primary); it.IsOk() {
+	if it, data := mi.GetByKey(primary); it.IsOk() {
 		n := data.a2.Uint64()
 		chain.Println("++++data.a2:", n)
 		n += 1
