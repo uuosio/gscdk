@@ -1,6 +1,6 @@
 Go Smart Contracts Development Kit
 
-# What the Go Smart Contracts look like?
+# What a Go Smart Contract looks like?
 
 Here is an example
 
