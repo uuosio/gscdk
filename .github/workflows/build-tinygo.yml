@@ -15,7 +15,8 @@ jobs:
       run:
         shell: bash
     env:
-      GSCDK_VERSION: 0.5.0
+      GSCDK_VERSION: 0.5.1
+      TINYGO_VERSION: v0.23.2
     strategy:
       matrix:
         python-version: [3.9]
@@ -50,17 +51,17 @@ jobs:
       - name:  Download tinygo for windows
         if: ${{ matrix.os == 'windows-latest' }}
         run: |
-          wget https://github.com/learnforpractice/tinygo/releases/download/v${{ env.GSCDK_VERSION }}/release-windows-2022.zip
+          wget https://github.com/learnforpractice/tinygo/releases/download/v${{ env.TINYGO_VERSION }}/release-windows-2022.zip
           7z x release-windows-2022.zip -o./pysrc
       - name:  Download tinygo for linux
         if: ${{ matrix.os == 'ubuntu-18.04' }}
         run: |
-          wget https://github.com/learnforpractice/tinygo/releases/download/v${{ env.GSCDK_VERSION }}/tinygo.linux-amd64.tar.gz
+          wget https://github.com/learnforpractice/tinygo/releases/download/v${{ env.TINYGO_VERSION }}/tinygo.linux-amd64.tar.gz
           tar -xf tinygo.linux-amd64.tar.gz -C ./pysrc
       - name:  Download tinygo for macos
         if: ${{ matrix.os == 'macos-latest' }}
         run: |
-          wget https://github.com/learnforpractice/tinygo/releases/download/v${{ env.GSCDK_VERSION }}/tinygo.darwin-amd64.tar.gz
+          wget https://github.com/learnforpractice/tinygo/releases/download/v${{ env.TINYGO_VERSION }}/tinygo.darwin-amd64.tar.gz
           tar -xf tinygo.darwin-amd64.tar.gz -C ./pysrc
       - name: Set up Python
         uses: actions/setup-python@v2
