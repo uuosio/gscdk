@@ -1,4 +1,5 @@
-Release v0.5.1
+Release v0.6.0
 
 1. Simplify secondary key declaration 
 2. Add support for calling Finalize method in main function
+3. Update tinygo to v0.24.0

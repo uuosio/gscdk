@@ -15,8 +15,8 @@ jobs:
       run:
         shell: bash
     env:
-      GSCDK_VERSION: 0.5.1
-      TINYGO_VERSION: v0.23.2
+      GSCDK_VERSION: 0.6.0
+      TINYGO_VERSION: 0.24.1
     strategy:
       matrix:
         python-version: [3.9]
@@ -89,7 +89,7 @@ jobs:
       - name: Test
         working-directory: tinygo
         run: |
-          cd tests/eosio/testcpp;go get -u -d github.com/uuosio/chain@master;./build.sh
+          cd tests/eosio/testcpp;go get -d github.com/uuosio/chain@master;./build.sh
       - name: release-tinygo
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
