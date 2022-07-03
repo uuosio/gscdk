@@ -4,6 +4,7 @@ import subprocess
 import shlex
 import shutil
 import platform
+from .wasm_checker import check_import_section
 
 __version__ = "0.6.1"
 
@@ -49,6 +50,12 @@ def run_tinygo():
             sys.exit(ret_code)
 
         wasm = find_wasm_file()
+        try:
+            check_import_section(f'{wasm}')
+        except Exception as e:
+            print_err(f'{e}')
+            sys.exit(-1)
+
         if shutil.which('wasm-opt'):
             cmd = f'wasm-opt {wasm} -Oz --strip-debug -o {wasm}2'
             cmd = shlex.split(cmd)
