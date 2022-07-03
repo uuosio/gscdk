@@ -4,6 +4,8 @@ import subprocess
 import shlex
 import shutil
 import platform
+import argparse
+import string
 from .wasm_checker import check_import_section
 
 __version__ = "0.6.1"
@@ -33,7 +35,7 @@ def find_wasm_file():
     except FileNotFoundError:
         return None
 
-def run_tinygo():
+def build():
     dir_name = os.path.dirname(os.path.realpath(__file__))
     dir_name = os.path.join(dir_name, "tinygo")
     tinygo = os.path.join(dir_name, 'bin/tinygo')
@@ -78,6 +80,47 @@ There are ready-to-install packages for many platforms:
         cmd = sys.argv[:]
         cmd[0] = tinygo
         return subprocess.call(cmd, stdout=sys.stdout, stderr=sys.stderr)
+
+def init(project_name):
+    for c in project_name:
+        if not c in string.ascii_lowercase or c == '_':
+            raise Exception('project name contain invalid character(s), only characters in [a-z_] supported')
+    os.mkdir(project_name)
+    src_dir = os.path.dirname(__file__)
+    for file in ['main.go', 'structs.go', 'tables.go', 'utils.go', 'test.py', 'test.sh', 'build.sh']:
+        src_file = os.path.join(src_dir, f'templates/init/{file}')
+        with open(src_file, 'r') as f:
+            content = f.read()
+        content = content.replace('{{name}}', project_name)
+        file_path = f'{project_name}/{file}'
+        with open(file_path, 'w') as f:
+            f.write(content)
+        if file.endswith('.sh'):
+            if not 'Windows' == platform.system():
+                os.chmod(file_path, 0o755)
+    os.chdir(project_name)
+    cmd = shlex.split(f'go mod init {project_name}')
+    subprocess.call(cmd)
+
+    cmd = shlex.split('go mod tidy')
+    subprocess.call(cmd)
+
+def run_tinygo():
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='subparser')
+
+    sub_parser = subparsers.add_parser('init')
+    sub_parser.add_argument('project_name')
+
+    sub_parser = subparsers.add_parser('build')
+    sub_parser.add_argument('-o', help='target wasm file')
+    sub_parser.add_argument('target', metavar='N', type=str, nargs='+', help='target wasm name')
+
+    result = parser.parse_args()
+    if result and result.subparser == "init":
+        init(result.project_name)
+    else:
+        build()
 
 def run_command(tool):
     dir_name = os.path.dirname(os.path.realpath(__file__))
