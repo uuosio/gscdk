@@ -2,9 +2,35 @@ import os
 import sys
 import subprocess
 import shlex
+import shutil
 import platform
 
 __version__ = "0.6.0"
+
+#https://stackabuse.com/how-to-print-colored-text-in-python/
+#https://stackoverflow.com/questions/287871/how-do-i-print-colored-text-to-the-terminal
+HEADER = '\033[95m'
+OKBLUE = '\033[94m'
+OKCYAN = '\033[96m'
+OKGREEN = '\033[92m'
+WARNING = '\033[1;30;43m'
+FAIL = '\033[91m'
+ENDC = '\033[0m'
+BOLD = '\033[1m'
+UNDERLINE = '\033[4m'
+
+def print_err(msg):
+    print(f'{FAIL}:{msg}{ENDC}')
+
+def print_warning(msg):
+    print(f'{WARNING}:{msg}{ENDC}')
+
+def find_wasm_file():
+    try:
+        with open('go.mod') as f:
+            return f.readlines()[0].strip().split(' ')[1] + '.wasm'
+    except FileNotFoundError:
+        return None
 
 def run_tinygo():
     dir_name = os.path.dirname(os.path.realpath(__file__))
@@ -18,7 +44,29 @@ def run_tinygo():
         args = shlex.split(args)
         cmd.extend(args)
         cmd.extend(sys.argv[2:])
-        return subprocess.call(cmd, stdout=sys.stdout, stderr=sys.stderr)
+        ret_code = subprocess.call(cmd, stdout=sys.stdout, stderr=sys.stderr)
+        if not ret_code == 0:
+            sys.exit(ret_code)
+
+        wasm = find_wasm_file()
+        if shutil.which('wasm-opt'):
+            cmd = f'wasm-opt {wasm} -Oz --strip-debug -o {wasm}2'
+            cmd = shlex.split(cmd)
+            ret_code = subprocess.call(cmd, stdout=sys.stdout, stderr=sys.stderr)
+            if not ret_code == 0:
+                sys.exit(ret_code)
+            shutil.move(f"{wasm}2",  f"{wasm}")
+        else:
+            print_warning('''
+wasm-opt not found! Make sure the binary is in your PATH environment.
+We use this tool to optimize the size of your contract's Wasm binary.
+wasm-opt is part of the binaryen package. You can find detailed
+installation instructions on https://github.com/WebAssembly/binaryen#tools.
+There are ready-to-install packages for many platforms:
+* Debian/Ubuntu: apt-get install binaryen
+* Homebrew: brew install binaryen
+* Arch Linux: pacman -S binaryen
+* Windows: binary releases at https://github.com/WebAssembly/binaryen/releases''')
     else:
         cmd = sys.argv[:]
         cmd[0] = tinygo
