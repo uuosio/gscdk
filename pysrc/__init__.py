@@ -35,7 +35,7 @@ def find_wasm_file():
     except FileNotFoundError:
         return None
 
-def build():
+def build(wasm, optimize=True):
     dir_name = os.path.dirname(os.path.realpath(__file__))
     dir_name = os.path.join(dir_name, "tinygo")
     tinygo = os.path.join(dir_name, 'bin/tinygo')
@@ -51,12 +51,14 @@ def build():
         if not ret_code == 0:
             sys.exit(ret_code)
 
-        wasm = find_wasm_file()
         try:
             check_import_section(f'{wasm}')
         except Exception as e:
             print_err(f'{e}')
             sys.exit(-1)
+
+        if not optimize:
+            return
 
         if shutil.which('wasm-opt'):
             cmd = f'wasm-opt {wasm} -Oz --strip-debug -o {wasm}2'
@@ -113,14 +115,25 @@ def run_tinygo():
     sub_parser.add_argument('project_name')
 
     sub_parser = subparsers.add_parser('build')
-    sub_parser.add_argument('-o', help='target wasm file')
+    sub_parser.add_argument('-o', '--output', help='target wasm file')
     sub_parser.add_argument('target', metavar='N', type=str, nargs='+', help='target wasm name')
+    sub_parser.add_argument('-d', '--debug', action='store_true', help='enable debug build')
+    sub_parser.add_argument('-gen-code', '--gen-code', type=str, help='enable code generation')
 
     result = parser.parse_args()
     if result and result.subparser == "init":
         init(result.project_name)
     else:
-        build()
+        if result.output:
+            wasm = result.output
+        else:
+            wasm = find_wasm_file()
+        if result.debug:
+            if '-d' in sys.argv: sys.argv.remove('-d')
+            if '--debug' in sys.argv: sys.argv.remove('--debug')
+            build(wasm, False)
+        else:
+            build(wasm, True)
 
 def run_command(tool):
     dir_name = os.path.dirname(os.path.realpath(__file__))

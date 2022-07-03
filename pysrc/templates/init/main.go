@@ -38,6 +38,3 @@ func (c *Contract) Inc(name string) {
 		chain.Println("count: ", value.count)
 	}
 }
-
-// go mod init hello
-// go mod tidy

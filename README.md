@@ -13,7 +13,7 @@ import (
 
 //table mytable
 type MyData struct {
-	primary uint64 //primary: t.primary
+	primary uint64 //primary
 	name    string
 }
 
@@ -80,7 +80,7 @@ python -m pip install --upgrade gscdk
 Building docker image for gscdk
 
 ```
-docker build github.com/learnforpractice/gscdk-docker#main -t gscdk/test
+docker build https://github.com/uuosio/gscdk-docker#main -t gscdk/test
 ```
 
 Running
@@ -132,8 +132,10 @@ eosio-go build -o mycontract.wasm .
 eosio-go build -gen-code=false -o mycontract .
 ```
 
-#### Disable Striping WASM File after Building
+#### Disable Code Optimization
+
+Specifying `-d` or `--debug` option to disable wasm optimization.
 
 ```bash
-eosio-go build -strip=false -o mycontract .
+eosio-go build -d -o mycontract.wasm .
 ```
