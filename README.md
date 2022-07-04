@@ -51,6 +51,10 @@ func (c *MyContract) SayHello(name string) {
 }
 ```
 
+# Quick Start
+
+[Quick Start](https://colab.research.google.com/github/uuosio/gscdk/blob/main/quickstart/quickstart.ipynb)
+
 # Installation
 
 ```bash
