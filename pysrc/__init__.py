@@ -8,7 +8,7 @@ import argparse
 import string
 from .wasm_checker import check_import_section
 
-__version__ = "0.6.1"
+__version__ = "0.6.2"
 
 #https://stackabuse.com/how-to-print-colored-text-in-python/
 #https://stackoverflow.com/questions/287871/how-do-i-print-colored-text-to-the-terminal
@@ -89,7 +89,7 @@ def init(project_name):
             raise Exception('project name contain invalid character(s), only characters in [a-z_] supported')
     os.mkdir(project_name)
     src_dir = os.path.dirname(__file__)
-    for file in ['main.go', 'structs.go', 'tables.go', 'utils.go', 'test.py', 'test.sh', 'build.sh']:
+    for file in ['main.go', 'structs.go', 'tables.go', 'utils.go', 'test.py', 'test.sh', 'build.sh', 'test.sh']:
         src_file = os.path.join(src_dir, f'templates/init/{file}')
         with open(src_file, 'r') as f:
             content = f.read()

@@ -1,4 +1,7 @@
-Release v0.6.1
+Release v0.6.2
 
-1. Optimizing wasm file after compiling.
+1. wasm: check imported functions
+2. Generate an initial project with init command
+3. Add more build options
+
 
