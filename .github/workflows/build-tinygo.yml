@@ -15,8 +15,8 @@ jobs:
       run:
         shell: bash
     env:
-      GSCDK_VERSION: 0.6.2
-      TINYGO_VERSION: 0.24.1
+      GSCDK_VERSION: 0.6.3
+      TINYGO_VERSION: 0.24.2
     strategy:
       matrix:
         python-version: [3.9]
@@ -56,7 +56,7 @@ jobs:
         if: ${{ matrix.os == 'windows-latest' }}
         run: |
           wget https://github.com/learnforpractice/tinygo/releases/download/v${{ env.TINYGO_VERSION }}/release-windows-2022.zip
-          7z x release-windows-2022.zip -o ./pysrc
+          7z x release-windows-2022.zip -o./pysrc
           cp src/codegenerator/codegenerator.exe ./pysrc/tinygo/bin
       - name:  Download tinygo for linux
         if: ${{ matrix.os == 'ubuntu-18.04' }}

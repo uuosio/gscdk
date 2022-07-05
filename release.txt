@@ -1,7 +1,3 @@
 Release v0.6.2
 
-1. wasm: check imported functions
-2. Generate an initial project with init command
-3. Add more build options
-
-
+1. Move codegenerator from tinygo to src
