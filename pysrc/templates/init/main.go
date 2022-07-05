@@ -21,7 +21,7 @@ func NewContract(receiver, firstReceiver, action chain.Name) *Contract {
 
 //action inc
 func (c *Contract) Inc(name string) {
-	db := NewCounterDB(c.receiver, c.receiver)
+	db := NewCounterTable(c.receiver, c.receiver)
 	it := db.Find(1)
 	payer := c.receiver
 	if it.IsOk() {
