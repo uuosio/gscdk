@@ -35,15 +35,20 @@ def find_wasm_file():
     except FileNotFoundError:
         return None
 
-def build(wasm, optimize=True):
+def build(wasm, tags, optimize=True):
     dir_name = os.path.dirname(os.path.realpath(__file__))
     dir_name = os.path.join(dir_name, "tinygo")
     tinygo = os.path.join(dir_name, 'bin/tinygo')
+    code_generator = os.path.join(dir_name, 'bin/codegenerator')
     if len(sys.argv) <= 1:
         return subprocess.call(tinygo, stdout=sys.stdout, stderr=sys.stderr)
     elif sys.argv[1] == "build":
+        cmd = [code_generator, '-tags', tags]
+        ret_code = subprocess.call(cmd, stdout=sys.stdout, stderr=sys.stderr)
+        if not ret_code == 0:
+            sys.exit(ret_code)
         cmd = [tinygo]
-        args = 'build -gc=leaking -target eosio -wasm-abi=generic -scheduler=none -opt z -tags=math_big_pure_go'
+        args = 'build -gc=leaking -target eosio -gen-code=false -wasm-abi=generic -scheduler=none -opt z -tags=math_big_pure_go'
         args = shlex.split(args)
         cmd.extend(args)
         cmd.extend(sys.argv[2:])
@@ -119,21 +124,27 @@ def run_tinygo():
     sub_parser.add_argument('target', metavar='N', type=str, nargs='+', help='target wasm name')
     sub_parser.add_argument('-d', '--debug', action='store_true', help='enable debug build')
     sub_parser.add_argument('-gen-code', '--gen-code', type=str, help='enable code generation')
+    sub_parser.add_argument('-tags', '--tags', type=str, default="", help='enable code generation')
 
     result = parser.parse_args()
-    if result and result.subparser == "init":
+    if not result:
+        parser.print_usage()
+        return
+
+    if result.subparser == "init":
         init(result.project_name)
-    else:
+    elif result.subparser == "build":
         if result.output:
             wasm = result.output
         else:
             wasm = find_wasm_file()
+        tags = result.tags
         if result.debug:
             if '-d' in sys.argv: sys.argv.remove('-d')
             if '--debug' in sys.argv: sys.argv.remove('--debug')
-            build(wasm, False)
+            build(wasm, tags, False)
         else:
-            build(wasm, True)
+            build(wasm, tags, True)
 
 def run_command(tool):
     dir_name = os.path.dirname(os.path.realpath(__file__))

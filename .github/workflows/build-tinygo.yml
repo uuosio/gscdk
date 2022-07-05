@@ -48,21 +48,28 @@ jobs:
           scoop bucket add extras
           scoop install ninja
           choco install wget --no-progress
+      - name:  Build code generator
+        working-directory: src/codegenerator
+        run: |
+          go build .
       - name:  Download tinygo for windows
         if: ${{ matrix.os == 'windows-latest' }}
         run: |
           wget https://github.com/learnforpractice/tinygo/releases/download/v${{ env.TINYGO_VERSION }}/release-windows-2022.zip
-          7z x release-windows-2022.zip -o./pysrc
+          7z x release-windows-2022.zip -o ./pysrc
+          cp src/codegenerator/codegenerator.exe ./pysrc/tinygo/bin
       - name:  Download tinygo for linux
         if: ${{ matrix.os == 'ubuntu-18.04' }}
         run: |
           wget https://github.com/learnforpractice/tinygo/releases/download/v${{ env.TINYGO_VERSION }}/tinygo.linux-amd64.tar.gz
           tar -xf tinygo.linux-amd64.tar.gz -C ./pysrc
+          cp src/codegenerator/codegenerator ./pysrc/tinygo/bin
       - name:  Download tinygo for macos
         if: ${{ matrix.os == 'macos-latest' }}
         run: |
           wget https://github.com/learnforpractice/tinygo/releases/download/v${{ env.TINYGO_VERSION }}/tinygo.darwin-amd64.tar.gz
           tar -xf tinygo.darwin-amd64.tar.gz -C ./pysrc
+          cp src/codegenerator/codegenerator ./pysrc/tinygo/bin
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
