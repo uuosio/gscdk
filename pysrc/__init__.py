@@ -121,7 +121,7 @@ def run_tinygo():
 
     sub_parser = subparsers.add_parser('build')
     sub_parser.add_argument('-o', '--output', help='target wasm file')
-    sub_parser.add_argument('target', metavar='N', type=str, nargs='+', help='target wasm name')
+    sub_parser.add_argument('target', metavar='N', type=str, nargs='?', help='target wasm name')
     sub_parser.add_argument('-d', '--debug', action='store_true', help='enable debug build')
     sub_parser.add_argument('-gen-code', '--gen-code', type=str, help='enable code generation')
     sub_parser.add_argument('-tags', '--tags', type=str, default="", help='enable code generation')
