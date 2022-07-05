@@ -26,7 +26,7 @@ func (c *MyContract) Test(name string) {
 	code := c.Receiver
 	scope := code
 	payer := c.Receiver
-	mydb := NewMyDataDB(code, scope)
+	mydb := NewMyDataTable(code, scope)
 	primary := uint64(111)
 	if it, data := mydb.GetByKey(primary); it.IsOk() {
 		if data.name != name {

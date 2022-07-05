@@ -29,6 +29,11 @@ def read_code_and_abi():
 def test_example():
     code, abi = read_code_and_abi()
     tester.deploy_contract('hello', code, abi, 0)
+
+    r = tester.push_action('hello', 'test', '')
+    logger.info(r['action_traces'][0]['console'])
+    tester.produce_block()
+
     r = tester.push_action('hello', 'test', '')
     logger.info(r['action_traces'][0]['console'])
     tester.produce_block()

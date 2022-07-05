@@ -2,14 +2,13 @@ package main
 
 import (
 	"github.com/uuosio/chain"
-	"github.com/uuosio/chain/database"
 )
 
 //table mydata
 type MyData struct {
-	primary uint64        //primary:t.primary
-	a1      uint64        //IDX64: bya1 : t.a1 : t.a1=%v
-	a2      chain.Uint128 //IDX128: bya2 : t.a2 : t.a2=%v
+	primary uint64        //primary
+	a1      uint64        //secondary
+	a2      chain.Uint128 //secondary
 }
 
 //contract test
@@ -27,7 +26,7 @@ func NewContract(receiver, firstReceiver, action chain.Name) *MyContract {
 func (t *MyContract) Test() {
 	payer := t.self
 
-	mi := NewMyDataDB(t.self, t.self)
+	mi := NewMyDataTable(t.self, t.self)
 	primary := uint64(1000)
 
 	if it, data := mi.GetByKey(primary); it.IsOk() {
@@ -46,10 +45,10 @@ func (t *MyContract) Test() {
 
 	secondary := uint64(0)
 	{
-		var it database.SecondaryIterator
-		idxDB := mi.GetIdxDBbya1()
-		it, secondary = idxDB.FindByPrimary(primary)
+		idxDB := mi.GetIdxTableBya1()
+		it, _secondary := idxDB.FindByPrimary(primary)
 		chain.Check(it.IsOk(), "Invalid secondary iterator")
+		secondary = _secondary.(uint64)
 		secondary += 1
 		chain.Println(idxDB.GetIndex(), it.I, it.Primary, secondary)
 		if it.IsOk() {
@@ -58,7 +57,7 @@ func (t *MyContract) Test() {
 	}
 	chain.Println("++++++++secondary:", secondary)
 	{
-		idxDB := mi.GetIdxDB("bya1")
+		idxDB := mi.GetIdxTableBya1()
 		it := idxDB.Find(secondary)
 		chain.Check(it.IsOk(), "Invalid secondary iterator")
 		secondary += 1

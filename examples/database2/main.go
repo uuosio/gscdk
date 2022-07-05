@@ -24,7 +24,7 @@ func NewContract(receiver, firstReceiver, action chain.Name) *MyContract {
 func (t *MyContract) Test() {
 	code := t.Receiver
 	payer := t.Receiver
-	db := NewMySingletonDB(code, code)
+	db := NewMySingletonTable(code, code)
 
 	data := db.Get()
 	if data != nil {

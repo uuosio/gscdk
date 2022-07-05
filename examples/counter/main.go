@@ -15,7 +15,7 @@ func NewContract(receiver, firstReceiver, action chain.Name) *Contract {
 
 //action test
 func (c *Contract) Test() {
-	db := NewCounterDB(c.self, c.self)
+	db := NewCounterTable(c.self, c.self)
 	item := db.Get()
 	if item == nil {
 		item = &Counter{count: 1}
