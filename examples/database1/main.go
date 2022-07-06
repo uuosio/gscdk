@@ -24,9 +24,8 @@ func NewContract(receiver, firstReceiver, action chain.Name) *MyContract {
 //action test
 func (c *MyContract) Test(name string) {
 	code := c.Receiver
-	scope := code
 	payer := c.Receiver
-	mydb := NewMyDataTable(code, scope)
+	mydb := NewMyDataTable(code)
 	primary := uint64(111)
 	if it, data := mydb.GetByKey(primary); it.IsOk() {
 		if data.name != name {

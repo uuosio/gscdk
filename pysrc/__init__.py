@@ -35,18 +35,22 @@ def find_wasm_file():
     except FileNotFoundError:
         return None
 
+def gen_code(output, tags):
+    dir_name = os.path.dirname(os.path.realpath(__file__))
+    dir_name = os.path.join(dir_name, "tinygo")
+    code_generator = os.path.join(dir_name, 'bin/codegenerator')
+    cmd = [code_generator, '-o', output, '-tags', tags]
+    ret_code = subprocess.call(cmd, stdout=sys.stdout, stderr=sys.stderr)
+    if not ret_code == 0:
+        sys.exit(ret_code)
+
 def build(wasm, tags, optimize=True):
     dir_name = os.path.dirname(os.path.realpath(__file__))
     dir_name = os.path.join(dir_name, "tinygo")
     tinygo = os.path.join(dir_name, 'bin/tinygo')
-    code_generator = os.path.join(dir_name, 'bin/codegenerator')
     if len(sys.argv) <= 1:
         return subprocess.call(tinygo, stdout=sys.stdout, stderr=sys.stderr)
     elif sys.argv[1] == "build":
-        cmd = [code_generator, '-tags', tags]
-        ret_code = subprocess.call(cmd, stdout=sys.stdout, stderr=sys.stderr)
-        if not ret_code == 0:
-            sys.exit(ret_code)
         cmd = [tinygo]
         args = 'build -gc=leaking -target eosio -gen-code=false -wasm-abi=generic -scheduler=none -opt z -tags=math_big_pure_go'
         args = shlex.split(args)
@@ -119,6 +123,10 @@ def run_tinygo():
     sub_parser = subparsers.add_parser('init')
     sub_parser.add_argument('project_name')
 
+    sub_parser = subparsers.add_parser('gencode')
+    sub_parser.add_argument('-o', '--output', default="generated.go", help='ouput go file')
+    sub_parser.add_argument('-tags', '--tags', type=str, default="", help='enable code generation')
+
     sub_parser = subparsers.add_parser('build')
     sub_parser.add_argument('-o', '--output', help='target wasm file')
     sub_parser.add_argument('target', metavar='N', type=str, nargs='?', help='target wasm name')
@@ -133,18 +141,26 @@ def run_tinygo():
 
     if result.subparser == "init":
         init(result.project_name)
+    elif result.subparser == "gencode":
+        gen_code(result.output, result.tags)
     elif result.subparser == "build":
         if result.output:
             wasm = result.output
         else:
             wasm = find_wasm_file()
+
         tags = result.tags
+        if result.gen_code:
+            gen_code('generated.go', tags)
+
         if result.debug:
             if '-d' in sys.argv: sys.argv.remove('-d')
             if '--debug' in sys.argv: sys.argv.remove('--debug')
             build(wasm, tags, False)
         else:
             build(wasm, tags, True)
+    else:
+        parser.print_usage()
 
 def run_command(tool):
     dir_name = os.path.dirname(os.path.realpath(__file__))

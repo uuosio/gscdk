@@ -1,3 +1,4 @@
+codegen.sh
 codegenerator
 pysrc/eosio.cdt
 pysrc/tinygo

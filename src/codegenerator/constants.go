@@ -28,7 +28,13 @@ func (mi *{{.StructName}}Table) Update(it *database.Iterator, v *{{.StructName}}
 `
 
 const cNewMultiIndexTemplate = `
-func New{{.Name}}Table(code chain.Name, scope chain.Name) *{{.Name}}Table {
+func New{{.Name}}Table(code chain.Name, optionalScope ...chain.Name) *{{.Name}}Table {
+	var scope chain.Name
+	if len(optionalScope) > 0 {
+		scope = optionalScope[0]
+	} else {
+		scope = chain.Name{N: 0}
+	}
 	table := chain.Name{N:uint64({{.TableName}})} //table name: {{.Name}}
 	if table.N&uint64(0x0f) != 0 {
 		// Limit table names to 12 characters so that the last character (4 bits) can be used to distinguish between the secondary indices.

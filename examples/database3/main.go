@@ -26,7 +26,7 @@ func NewContract(receiver, firstReceiver, action chain.Name) *MyContract {
 func (t *MyContract) Test() {
 	payer := t.self
 
-	mi := NewMyDataTable(t.self, t.self)
+	mi := NewMyDataTable(t.self)
 	primary := uint64(1000)
 
 	if it, data := mi.GetByKey(primary); it.IsOk() {
