@@ -99,7 +99,13 @@ type {{.Name}}Table struct {
 	db *database.SingletonTable
 }
 
-func New{{.Name}}Table(code chain.Name, scope chain.Name) *{{.Name}}Table {
+func New{{.Name}}Table(code chain.Name, optionalScope ...chain.Name) *{{.Name}}Table {
+	var scope chain.Name
+	if len(optionalScope) > 0 {
+		scope = optionalScope[0]
+	} else {
+		scope = chain.Name{N: 0}
+	}
 	chain.Check(code != chain.Name{0}, "bad code name")
 	table := chain.Name{N:uint64({{.TableName}})}
 	db := database.NewSingletonTable(code, scope, table, {{.Name}}Unpacker)
