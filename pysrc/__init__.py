@@ -131,7 +131,7 @@ def run_tinygo():
     sub_parser.add_argument('-o', '--output', help='target wasm file')
     sub_parser.add_argument('target', metavar='N', type=str, nargs='?', help='target wasm name')
     sub_parser.add_argument('-d', '--debug', action='store_true', help='enable debug build')
-    sub_parser.add_argument('-gen-code', '--gen-code', type=str, help='enable code generation')
+    sub_parser.add_argument('-gen-code', '--gen-code', type=str, default="true", help='enable code generation')
     sub_parser.add_argument('-tags', '--tags', type=str, default="", help='enable code generation')
 
     result = parser.parse_args()
@@ -150,7 +150,7 @@ def run_tinygo():
             wasm = find_wasm_file()
 
         tags = result.tags
-        if result.gen_code:
+        if result.gen_code == "true":
             gen_code('generated.go', tags)
 
         if result.debug:

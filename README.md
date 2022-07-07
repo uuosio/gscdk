@@ -31,9 +31,8 @@ func NewContract(receiver, firstReceiver, action chain.Name) *MyContract {
 //action sayhello
 func (c *MyContract) SayHello(name string) {
 	code := c.Receiver
-	scope := code
 	payer := c.Receiver
-	mydb := NewMyDataDB(code, scope)
+	mydb := NewMyDataDB(code)
 	primary := uint64(111)
 	if it, data := mydb.GetByKey(primary); it.IsOk() {
 		if data.name != name {
