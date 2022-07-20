@@ -1,5 +1,11 @@
 Go Smart Contracts Development Kit
 
+![Debugging](https://github.com/uuosio/gscdk/blob/main/images/debugging.gif)
+
+
+![Code Coverage](https://github.com/uuosio/gscdk/blob/main/images/code-coverage.png)
+
+
 # What a Go Smart Contract looks like?
 
 Here is an example
