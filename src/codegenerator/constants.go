@@ -78,6 +78,14 @@ func dummy() {
 const cMainCode = `
 func main() {
 	receiver, firstReceiver, action := chain.GetApplyArgs()
+	contract_apply(receiver.N, firstReceiver.N, action.N)
+}
+
+func contract_apply(_receiver, _firstReceiver, _action uint64) {
+	receiver := chain.Name{_receiver}
+	firstReceiver := chain.Name{_firstReceiver}
+	action := chain.Name{_action}
+
 	contract := NewContract(receiver, firstReceiver, action)
 	if contract == nil {
 		return
