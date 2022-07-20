@@ -1,3 +1,4 @@
-Release v0.6.2
+Release v0.6.3
 
-1. Move codegenerator from tinygo to src
+1. Add support for debugging
+

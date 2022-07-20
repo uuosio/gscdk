@@ -23,7 +23,7 @@ for root, dirs, files in os.walk("pysrc/templates"):
 
 setup(
     name="gscdk",
-    version="0.6.3",
+    version="0.7.0",
     description="Go Smart Contract Development Kit",
     author='The UUOSIO Team',
     license="BSD-3-Clause",
