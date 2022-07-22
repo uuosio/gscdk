@@ -1,10 +1,11 @@
 Go Smart Contracts Development Kit
 
+# Debugger
 ![Debugging](https://github.com/uuosio/gscdk/blob/main/images/debugging.gif)
 
 
+# Code Coverage
 ![Code Coverage](https://github.com/uuosio/gscdk/blob/main/images/code-coverage.png)
-
 
 # What a Go Smart Contract looks like?
 
@@ -66,7 +67,7 @@ func (c *MyContract) SayHello(name string) {
 python3 -m pip install gscdk
 ```
 
-For Windows platform:
+For the Windows platform:
 
 ```bash
 python -m pip install gscdk
@@ -78,7 +79,7 @@ python -m pip install gscdk
 python3 -m pip install --upgrade gscdk
 ```
 
-For Windows platform:
+For the Windows platform:
 
 ```bash
 python -m pip install --upgrade gscdk
@@ -102,43 +103,43 @@ docker run -w /root/dev -it --rm -v "$(pwd)":/root/dev -t gscdk/test /bin/bash
 
 Follow the steps in [Building](./BUILDING.md)
 
-That will build tinygo command in compiler/build directory that support for building Go Smart Contracts.
+That will build the `tinygo` command in the compiler/build directory that supports building Go Smart Contracts.
 
 ```bash
 export PATH=$(pwd)/compiler/build:$PATH
 ```
 
-# eosio-go
+# go-contract
 
-## Initializing a project with "init" subcommand
+## Initializing a project with the "init" subcommand
 
-"init" command initialize a project with contract name
+The "init" command initializes a project with the contract name
 
 ```
-eosio-go init mycontract
+go-contract init mycontract
 cd mycontract
 ```
 
 ## Generating ABI and Extra Code for Smart Contracts
 
 ```
-eosio-go gencode -o generated.go .
+go-contract gencode
 ```
 
-Code generation is also the default option for "build" command
+Code generation is also the default option for the "build" command
 
 ## Building Go Smart Contracts Project
 
 #### Compiling the Source Code
 
 ```bash
-eosio-go build -o mycontract.wasm .
+go-contract build
 ```
 
 #### Disable Code Generation during Building
 
 ```bash
-eosio-go build -gen-code=false -o mycontract .
+go-contract build -gen-code=false .
 ```
 
 #### Disable Code Optimization
@@ -146,5 +147,5 @@ eosio-go build -gen-code=false -o mycontract .
 Specifying `-d` or `--debug` option to disable wasm optimization.
 
 ```bash
-eosio-go build -d -o mycontract.wasm .
+go-contract build -d
 ```
