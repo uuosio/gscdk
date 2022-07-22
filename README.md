@@ -78,20 +78,6 @@ For the Windows platform:
 python -m pip install --upgrade gscdk
 ```
 
-### Installing gscdk in Docker
-
-Building docker image for gscdk
-
-```
-docker build https://github.com/uuosio/gscdk-docker#main -t gscdk/test
-```
-
-Running
-
-```
-docker run -w /root/dev -it --rm -v "$(pwd)":/root/dev -t gscdk/test /bin/bash
-```
-
 # Building Go Smart Contracts Compiler
 
 Follow the steps in [Building](./BUILDING.md)
