@@ -98,7 +98,7 @@ def init(project_name):
             raise Exception('project name contain invalid character(s), only characters in [a-z_] supported')
     os.mkdir(project_name)
     src_dir = os.path.dirname(__file__)
-    for file in ['main.go', 'structs.go', 'tables.go', 'utils.go', 'test.py', 'test.sh', 'build.sh', 'test.sh']:
+    for file in ['main.go', 'structs.go', 'tables.go', 'utils.go', 'basic_test.go', 'test.py', 'test.sh', 'build.sh', 'test.sh']:
         src_file = os.path.join(src_dir, f'templates/init/{file}')
         with open(src_file, 'r') as f:
             content = f.read()
@@ -115,6 +115,8 @@ def init(project_name):
 
     cmd = shlex.split('go mod tidy')
     subprocess.call(cmd)
+    
+    gen_code("generated.go", "")
 
 def run_tinygo():
     parser = argparse.ArgumentParser()
