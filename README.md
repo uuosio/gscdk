@@ -147,6 +147,36 @@ go-contract build -d
 
 # Debugging
 
+Install `ipyeos` first for debugging.
+
+```bash
+python3 -m pip install ipyeos
+```
+
+In order to update to a new version, use the following command:
+
+```bash
+python3 -m pip install -U ipyeos
+```
+
+Then run the debugging server:
+
+```bash
+eos-debugger
+```
+
+On Windows, you need to use a docker image to run a debugging server.
+
+```bash
+docker pull ghcr.io/uuosio/ipyeos:latest
+```
+
+Run the debugging server on the Windows platform:
+
+```bash
+docker run -it --rm -p 9090:9090 -p 9092:9092 -t ghcr.io/uuosio/ipyeos
+```
+
 ![Debugging](https://github.com/uuosio/gscdk/blob/main/images/debugging.gif)
 
 # Code Coverage Analysis
