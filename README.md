@@ -1,12 +1,5 @@
 Go Smart Contracts Development Kit
 
-# Debugger
-![Debugging](https://github.com/uuosio/gscdk/blob/main/images/debugging.gif)
-
-
-# Code Coverage
-![Code Coverage](https://github.com/uuosio/gscdk/blob/main/images/code-coverage.png)
-
 # What a Go Smart Contract looks like?
 
 Here is an example
@@ -149,3 +142,21 @@ Specifying `-d` or `--debug` option to disable wasm optimization.
 ```bash
 go-contract build -d
 ```
+
+
+
+# Debugging
+
+![Debugging](https://github.com/uuosio/gscdk/blob/main/images/debugging.gif)
+
+# Code Coverage Analysis
+
+Use the following command to generate a code coverage report in html
+
+```bash
+go test -coverprofile=coverage.out
+go tool cover -html=coverage.out
+```
+
+![Code Coverage](https://github.com/uuosio/gscdk/blob/main/images/code-coverage.png)
+
