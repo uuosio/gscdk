@@ -19,7 +19,7 @@ jobs:
       run:
         shell: bash
     env:
-      GSCDK_VERSION: 0.7.0
+      GSCDK_VERSION: 0.7.1
       TINYGO_VERSION: 0.24.2
     strategy:
       matrix:
