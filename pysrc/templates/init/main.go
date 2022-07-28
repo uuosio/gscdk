@@ -20,7 +20,7 @@ func NewContract(receiver, firstReceiver, action chain.Name) *Contract {
 }
 
 //action inc
-func (c *Contract) Inc(name string) {
+func (c *Contract) Inc() {
 	db := NewCounterTable(c.receiver)
 	it := db.Find(1)
 	payer := c.receiver
