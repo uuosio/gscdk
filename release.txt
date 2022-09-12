@@ -1,4 +1,4 @@
-Release v0.6.3
+Release v0.7.2
 
-1. Add support for debugging
+1. Update code generator
 
