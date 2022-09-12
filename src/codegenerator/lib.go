@@ -71,7 +71,7 @@ func generate_code(inFile *C.char, outFile *C.char, tags **C.char, tags_length C
 		_tags = append(_tags, C.GoString(p))
 	}
 
-	err := GenerateCode(C.GoString(inFile), C.GoString(outFile), _tags)
+	err := GenerateCode(C.GoString(inFile), C.GoString(outFile), _tags, "main")
 	if err == nil {
 		return renderData("ok")
 	} else {

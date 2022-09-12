@@ -29,17 +29,13 @@ def print_warning(msg):
     print(f'{WARNING}:{msg}{ENDC}')
 
 def find_wasm_file():
-    try:
-        with open('go.mod') as f:
-            return f.readlines()[0].strip().split(' ')[1] + '.wasm'
-    except FileNotFoundError:
-        return None
+    return os.path.basename(os.path.realpath(os.curdir)) + '.wasm'
 
-def gen_code(output, tags):
+def gen_code(output, tags, package_name="main"):
     dir_name = os.path.dirname(os.path.realpath(__file__))
     dir_name = os.path.join(dir_name, "tinygo")
     code_generator = os.path.join(dir_name, 'bin/codegenerator')
-    cmd = [code_generator, '-o', output, '-tags', tags]
+    cmd = [code_generator, '-o', output, '-tags', tags, '-p', package_name]
     ret_code = subprocess.call(cmd, stdout=sys.stdout, stderr=sys.stderr)
     if not ret_code == 0:
         sys.exit(ret_code)
@@ -128,6 +124,7 @@ def run_tinygo():
     sub_parser = subparsers.add_parser('gencode')
     sub_parser.add_argument('-o', '--output', default="generated.go", help='ouput go file')
     sub_parser.add_argument('-tags', '--tags', type=str, default="", help='enable code generation')
+    sub_parser.add_argument('-p', '--package-name', default="main", help='package name of generated code')
 
     sub_parser = subparsers.add_parser('build')
     sub_parser.add_argument('-o', '--output', help='target wasm file')
@@ -144,7 +141,7 @@ def run_tinygo():
     if result.subparser == "init":
         init(result.project_name)
     elif result.subparser == "gencode":
-        gen_code(result.output, result.tags)
+        gen_code(result.output, result.tags, result.package_name)
     elif result.subparser == "build":
         if result.output:
             wasm = result.output

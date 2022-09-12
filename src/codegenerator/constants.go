@@ -76,12 +76,13 @@ func dummy() {
 }`
 
 const cMainCode = `
+
 func main() {
 	receiver, firstReceiver, action := chain.GetApplyArgs()
-	contract_apply(receiver.N, firstReceiver.N, action.N)
+	ContractApply(receiver.N, firstReceiver.N, action.N)
 }
 
-func contract_apply(_receiver, _firstReceiver, _action uint64) {
+func ContractApply(_receiver, _firstReceiver, _action uint64) {
 	receiver := chain.Name{_receiver}
 	firstReceiver := chain.Name{_firstReceiver}
 	action := chain.Name{_action}
@@ -137,7 +138,7 @@ func (t *{{.Name}}Table) Remove() {
 }
 `
 
-const cImportCode = `package main
+const cImportCode = `package %[1]s
 import (
 	"github.com/uuosio/chain"
     "github.com/uuosio/chain/database"

@@ -135,6 +135,7 @@ type FunctionInfo struct {
 }
 
 type CodeGenerator struct {
+	packageName        string
 	dirName            string
 	currentFile        string
 	contractName       string
@@ -1102,9 +1103,9 @@ func (t *CodeGenerator) ParseGoFile(goFile string, tags []string) error {
 		}
 	}
 
-	if file.Name.Name != "main" {
-		return nil
-	}
+	// if file.Name.Name != "main" {
+	// 	return nil
+	// }
 
 	log.Println("Processing file:", goFile)
 
@@ -1409,7 +1410,7 @@ func (t *CodeGenerator) GenCode(generatedFile string) error {
 		log.Println("++struct:", info.StructName)
 	}
 
-	t.writeCode(cImportCode)
+	t.writeCode(cImportCode, t.packageName)
 
 	for _, action := range t.actions {
 		t.genStruct(action.ActionName, action.Members)
@@ -1559,6 +1560,9 @@ func (t *CodeGenerator) GenAbi() error {
 
 	abi.Actions = make([]ABIAction, 0, len(t.actions))
 	for _, action := range t.actions {
+		if !action.Ignore {
+			continue
+		}
 		a := ABIAction{}
 		a.Name = action.ActionName
 		a.Type = action.ActionName
@@ -1710,10 +1714,11 @@ func (t *CodeGenerator) Analyse() {
 	}
 }
 
-func GenerateCode(inFile string, outFile string, tags []string) error {
+func GenerateCode(inFile string, outFile string, tags []string, packageName string) error {
 	// log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.SetFlags(log.Flags() &^ (log.Ldate | log.Ltime))
 	gen := NewCodeGenerator()
+	gen.packageName = packageName
 	gen.fset = token.NewFileSet()
 
 	if filepath.Ext(inFile) == ".go" {
