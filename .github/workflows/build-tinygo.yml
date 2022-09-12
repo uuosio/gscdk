@@ -2,7 +2,7 @@ name: build tinygo
 
 on:
   push:
-    branches: [ dev ]
+    branches: [ main ]
     tags:
       - "v*.*.*"
   # pull_request:
@@ -97,10 +97,16 @@ jobs:
       - name: Install uuosio.gscdk
         run: |
           python -m pip uninstall gscdk -y;python -m pip install ./dist/${{ steps.whlfile.outputs.value }}
-      - name: Test
+      - name: Test tinygo
         working-directory: tinygo
         run: |
           cd tests/eosio/testcpp;go get -d github.com/uuosio/chain@master;./build.sh
+      - name: Test ipyeos
+        if: ${{ matrix.os == 'ubuntu-18.04' || matrix.os == 'macos-latest' }}
+        working-directory: tests
+        run: |
+          go-contract build -o test.wasm .
+          PYTHON_SHARED_LIB_PATH=${{ env.pythonLocation }}/lib/libpython3.9.so ipyeos -m pytest -s -x test.py
       - name: release-tinygo
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
