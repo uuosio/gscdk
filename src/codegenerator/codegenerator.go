@@ -1560,7 +1560,7 @@ func (t *CodeGenerator) GenAbi() error {
 
 	abi.Actions = make([]ABIAction, 0, len(t.actions))
 	for _, action := range t.actions {
-		if !action.Ignore {
+		if action.Ignore {
 			continue
 		}
 		a := ABIAction{}
