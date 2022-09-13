@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/uuosio/chain v0.2.1
-	github.com/uuosio/chaintester v0.0.0-20220913013628-b275d54afe43
+	github.com/uuosio/chaintester v0.0.0-20220913015956-d214c73596e4
 )
 
 require (
