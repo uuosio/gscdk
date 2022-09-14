@@ -63,7 +63,9 @@ jobs:
           7z x release-windows-2022.zip -o./pysrc
           cp src/codegenerator/codegenerator.exe ./pysrc/tinygo/bin
           wget https://github.com/WebAssembly/binaryen/releases/download/version_109/binaryen-version_109-x86_64-windows.tar.gz
-          tar -xzf binaryen-version_109-x86_64-windows.tar.gz -C ./pysrc
+          tar -xzf binaryen-version_109-x86_64-windows.tar.gz
+          mkdir -p ./pysrc/binaryen-version_109/bin
+          cp binaryen-version_109/bin/wasm-opt.exe ./pysrc/binaryen-version_109/bin
       - name:  Download tinygo and binaryen for linux
         if: ${{ matrix.os == 'ubuntu-20.04' }}
         run: |
@@ -71,7 +73,9 @@ jobs:
           tar -xf tinygo.linux-amd64.tar.gz -C ./pysrc
           cp src/codegenerator/codegenerator ./pysrc/tinygo/bin
           wget https://github.com/WebAssembly/binaryen/releases/download/version_109/binaryen-version_109-x86_64-linux.tar.gz
-          tar -xzf binaryen-version_109-x86_64-linux.tar.gz -C ./pysrc
+          tar -xzf binaryen-version_109-x86_64-linux.tar.gz
+          mkdir -p ./pysrc/binaryen-version_109/bin
+          cp binaryen-version_109/bin/wasm-opt ./pysrc/binaryen-version_109/bin
       - name:  Download tinygo and binaryen for macos
         if: ${{ matrix.os == 'macos-12' }}
         run: |
@@ -79,7 +83,9 @@ jobs:
           tar -xf tinygo.darwin-amd64.tar.gz -C ./pysrc
           cp src/codegenerator/codegenerator ./pysrc/tinygo/bin
           wget https://github.com/WebAssembly/binaryen/releases/download/version_109/binaryen-version_109-x86_64-macos.tar.gz
-          tar -xzf binaryen-version_109-x86_64-macos.tar.gz -C ./pysrc
+          tar -xzf binaryen-version_109-x86_64-macos.tar.gz
+          mkdir -p ./pysrc/binaryen-version_109/bin
+          cp binaryen-version_109/bin/wasm-opt ./pysrc/binaryen-version_109/bin
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
