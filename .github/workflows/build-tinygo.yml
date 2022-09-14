@@ -86,6 +86,8 @@ jobs:
           tar -xzf binaryen-version_109-x86_64-macos.tar.gz
           mkdir -p ./pysrc/binaryen-version_109/bin
           cp binaryen-version_109/bin/wasm-opt ./pysrc/binaryen-version_109/bin
+          mkdir -p ./pysrc/binaryen-version_109/lib
+          cp binaryen-version_109/lib/libbinaryen.dylib ./pysrc/binaryen-version_109/lib
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
