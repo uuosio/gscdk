@@ -8,18 +8,11 @@ from distutils.core import setup
 from distutils.sysconfig import get_python_lib
 import glob
 
-# if os.path.exists('pysrc/tinygo'):
-#     shutil.rmtree('pysrc/tinygo')
-# shutil.copytree('tinygo/build/release/tinygo', 'pysrc/tinygo')
-
 release_files = []
-for root, dirs, files in os.walk("pysrc/tinygo"):
-    for f in files:
-        release_files.append(os.path.join(root.replace('pysrc/', ''), f))    
-
-for root, dirs, files in os.walk("pysrc/templates"):
-    for f in files:
-        release_files.append(os.path.join(root.replace('pysrc/', ''), f))
+for d in ["pysrc/tinygo", "pysrc/templates", 'pysrc/binaryen-version_109']:
+    for root, dirs, files in os.walk(d):
+        for f in files:
+            release_files.append(os.path.join(root.replace('pysrc/', ''), f))
 
 setup(
     name="gscdk",

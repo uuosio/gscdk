@@ -22,6 +22,8 @@ ENDC = '\033[0m'
 BOLD = '\033[1m'
 UNDERLINE = '\033[4m'
 
+gscdk_install_dir = os.path.dirname(os.path.realpath(__file__))
+
 def print_err(msg):
     print(f'{FAIL}:{msg}{ENDC}')
 
@@ -64,9 +66,14 @@ def build(wasm, tags, optimize=True):
 
         if not optimize:
             return
-
-        if shutil.which('wasm-opt'):
-            cmd = f'wasm-opt {wasm} -Oz --strip-debug -o {wasm}2'
+        
+        if 'Windows' == platform.system():
+            wasm_opt = f'{gscdk_install_dir}/binaryen-version_109/bin/wasm-opt.exe'
+        else:
+            wasm_opt = f'{gscdk_install_dir}/binaryen-version_109/bin/wasm-opt'
+        print(wasm_opt)
+        if os.path.exists(wasm_opt):
+            cmd = f'{wasm_opt} {wasm} -Oz --strip-debug -o {wasm}2'
             cmd = shlex.split(cmd)
             ret_code = subprocess.call(cmd, stdout=sys.stdout, stderr=sys.stderr)
             if not ret_code == 0:
