@@ -67,14 +67,15 @@ def build(wasm, tags, optimize=True):
         if not optimize:
             return
         
+        wasm_opt = os.path.join(gscdk_install_dir, "binaryen-version_109/bin/wasm-opt")
+
         if 'Windows' == platform.system():
-            wasm_opt = f'{gscdk_install_dir}/binaryen-version_109/bin/wasm-opt.exe'
-        else:
-            wasm_opt = f'{gscdk_install_dir}/binaryen-version_109/bin/wasm-opt'
-        print(wasm_opt)
+            wasm_opt += ".exe"
         if os.path.exists(wasm_opt):
-            cmd = f'{wasm_opt} {wasm} -Oz --strip-debug -o {wasm}2'
+            cmd = f'{wasm} -Oz --strip-debug -o {wasm}2'
             cmd = shlex.split(cmd)
+            cmd.insert(0, wasm_opt)
+            print(cmd)
             ret_code = subprocess.call(cmd, stdout=sys.stdout, stderr=sys.stderr)
             if not ret_code == 0:
                 sys.exit(ret_code)
