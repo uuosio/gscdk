@@ -59,7 +59,7 @@ jobs:
       - name:  Download tinygo and binaryen for windows
         if: ${{ matrix.os == 'windows-latest' }}
         run: |
-          wget https://github.com/learnforpractice/tinygo/releases/download/v${{ env.TINYGO_VERSION }}/release-windows-2022.zip
+          wget https://github.com/uuosio/tinygo/releases/download/v${{ env.TINYGO_VERSION }}/release-windows-2022.zip
           7z x release-windows-2022.zip -o./pysrc
           cp src/codegenerator/codegenerator.exe ./pysrc/tinygo/bin
           wget https://github.com/WebAssembly/binaryen/releases/download/version_109/binaryen-version_109-x86_64-windows.tar.gz
@@ -69,7 +69,7 @@ jobs:
       - name:  Download tinygo and binaryen for linux
         if: ${{ matrix.os == 'ubuntu-20.04' }}
         run: |
-          wget https://github.com/learnforpractice/tinygo/releases/download/v${{ env.TINYGO_VERSION }}/tinygo.linux-amd64.tar.gz
+          wget https://github.com/uuosio/tinygo/releases/download/v${{ env.TINYGO_VERSION }}/tinygo.linux-amd64.tar.gz
           tar -xf tinygo.linux-amd64.tar.gz -C ./pysrc
           cp src/codegenerator/codegenerator ./pysrc/tinygo/bin
           wget https://github.com/WebAssembly/binaryen/releases/download/version_109/binaryen-version_109-x86_64-linux.tar.gz
@@ -79,7 +79,7 @@ jobs:
       - name:  Download tinygo and binaryen for macos
         if: ${{ matrix.os == 'macos-12' }}
         run: |
-          wget https://github.com/learnforpractice/tinygo/releases/download/v${{ env.TINYGO_VERSION }}/tinygo.darwin-amd64.tar.gz
+          wget https://github.com/uuosio/tinygo/releases/download/v${{ env.TINYGO_VERSION }}/tinygo.darwin-amd64.tar.gz
           tar -xf tinygo.darwin-amd64.tar.gz -C ./pysrc
           cp src/codegenerator/codegenerator ./pysrc/tinygo/bin
           wget https://github.com/WebAssembly/binaryen/releases/download/version_109/binaryen-version_109-x86_64-macos.tar.gz
