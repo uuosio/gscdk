@@ -8,7 +8,7 @@ import argparse
 import string
 from .wasm_checker import check_import_section
 
-__version__ = "0.7.3"
+__version__ = "0.7.4"
 
 #https://stackabuse.com/how-to-print-colored-text-in-python/
 #https://stackoverflow.com/questions/287871/how-do-i-print-colored-text-to-the-terminal
@@ -131,7 +131,7 @@ def run_tinygo():
 
     sub_parser = subparsers.add_parser('gencode')
     sub_parser.add_argument('-o', '--output', default="generated.go", help='ouput go file')
-    sub_parser.add_argument('-tags', '--tags', type=str, default="", help='enable code generation')
+    sub_parser.add_argument('-tags', '--tags', type=str, default="", help='specify build tags')
     sub_parser.add_argument('-p', '--package-name', default="main", help='package name of generated code')
 
     sub_parser = subparsers.add_parser('build')
@@ -139,7 +139,7 @@ def run_tinygo():
     sub_parser.add_argument('target', metavar='N', type=str, nargs='?', help='target wasm name')
     sub_parser.add_argument('-d', '--debug', action='store_true', help='enable debug build')
     sub_parser.add_argument('-gen-code', '--gen-code', type=str, default="true", help='enable code generation')
-    sub_parser.add_argument('-tags', '--tags', type=str, default="", help='enable code generation')
+    sub_parser.add_argument('-tags', '--tags', type=str, default="", help='specify build tags')
 
     result = parser.parse_args()
     if not result:
