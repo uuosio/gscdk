@@ -942,12 +942,12 @@ func (t *CodeGenerator) parseFunc(f *ast.FuncDecl) error {
 
 	if f.Recv != nil && f.Recv.List != nil {
 		for _, v := range f.Recv.List {
-			expr, ok := v.Type.(*ast.StarExpr) //ast.Ident ast.StarExpr
-			if ok {
-				ident := expr.X.(*ast.Ident)
-				if ident.Obj != nil {
-					obj := ident.Obj
-					t.functionMap[obj.Name] = append(t.functionMap[obj.Name], FunctionInfo{f.Name.Name})
+			if expr, ok := v.Type.(*ast.StarExpr); ok { //ast.Ident ast.StarExpr
+				if ident, ok := expr.X.(*ast.Ident); ok {
+					if ident.Obj != nil {
+						obj := ident.Obj
+						t.functionMap[obj.Name] = append(t.functionMap[obj.Name], FunctionInfo{f.Name.Name})
+					}
 				}
 			}
 		}
