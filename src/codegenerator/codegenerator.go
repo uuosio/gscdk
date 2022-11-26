@@ -21,10 +21,6 @@ import (
 )
 
 /*
- */
-import "C"
-
-/*
 	bool
 	int8
 	uint8
@@ -1311,24 +1307,25 @@ func (t *CodeGenerator) genPackUnpackCodeForVariant(structName string, members [
 func (t *CodeGenerator) genPackCodeForSpecialStruct(specialType int, structName string, member StructMember) {
 	if specialType == BinaryExtensionType {
 		t.writeCode(`
-func (t *%s) Pack() []byte {
+func (t *%s) Pack(enc *chain.Encoder) int {
+	oldSize := enc.GetSize()
 	if !t.HasValue {
-		return []byte{}
+		return 0
 	}`, structName)
-		t.writeCode("    enc := chain.NewEncoder(t.Size())")
 		code := member.PackMember()
 		t.writeCode(code)
-		t.writeCode("    return enc.GetBytes()\n}\n")
+		t.writeCode("    return enc.GetSize() - oldSize\n}\n")
 	} else if specialType == OptionalType {
 		t.writeCode(`
-func (t *%s) Pack() []byte {
+func (t *%s) Pack(enc *chain.Encoder) int {
+	oldSize := enc.GetSize()
 	if !t.IsValid {
-		return []byte{0}
+		enc.WriteUint8(uint8(0))
+		return 1
 	}`, structName)
-		t.writeCode("    enc := chain.NewEncoder(t.Size())")
 		t.writeCode("    enc.WriteUint8(uint8(1))")
 		t.writeCode(member.PackMember())
-		t.writeCode("    return enc.GetBytes()\n}\n")
+		t.writeCode("    return enc.GetSize() - oldSize\n}\n")
 	}
 }
 

@@ -87,7 +87,7 @@ func ContractApply(_receiver, _firstReceiver, _action uint64) {
 	firstReceiver := chain.Name{_firstReceiver}
 	action := chain.Name{_action}
 
-	contract := NewContract(receiver, firstReceiver, action)
+contract := NewContract(receiver, firstReceiver, action)
 	if contract == nil {
 		return
 	}
@@ -147,11 +147,13 @@ import (
 `
 
 const cExtensionTemplate = `
-func (t *%[1]s) Pack() []byte {
+func (t *%[1]s) Pack(enc *chain.Encoder) int {
+	oldSize := enc.GetSize()
 	if !t.HasValue {
-		return []byte{}
+		return 0
 	}
-	return t.%[2]s.Pack()
+	t.%[2]s.Pack(enc)
+	return enc.GetSize() - oldSize
 }
 
 func (t *%[1]s) Unpack(data []byte) int {
@@ -173,14 +175,16 @@ func (t *%[1]s) Size() int {
 `
 
 const cOptionalTemplate = `
-func (t *%[1]s) Pack() []byte {
+func (t *%[1]s) Pack(enc *chain.Encoder) int {
+	oldSize := enc.GetSize()
 	if !t.IsValid {
-		return []byte{0}
+		enc.PackUint8(0)
+		return 1
+	} else {
+		enc.PackUint8(1)
+		t.%[2]s.Pack(enc)
 	}
-	buf := make([]byte, 0, t.Size()+1)
-	buf = append(buf, 1)
-	buf = append(buf, t.%[2]s.Pack()...) //TODO: handle pack for different type
-	return buf
+	return enc.GetSize() - oldSize
 }
 
 func (t *%[1]s) Unpack(data []byte) int {
@@ -426,12 +430,12 @@ func (t *{{.StructInfo.StructName}}) SetSecondaryValue(index int, v interface{})
 `
 
 const cSerializerTemplate = `
-func (t *{{.StructName}}) Pack() []byte {
-    enc := chain.NewEncoder(t.Size())
+func (t *{{.StructName}}) Pack(enc *chain.Encoder) int {
+	oldSize := enc.GetSize()
 	{{- range $i, $member := .Members}}
 	{{$member.PackMember}}
 	{{- end}}
-    return enc.GetBytes()
+    return enc.GetSize() - oldSize
 }
 
 func (t *{{.StructName}}) Unpack(data []byte) int {
@@ -465,16 +469,16 @@ func New{{.StructName}}(value interface{}) *{{.StructName}} {
 	return ret
 }
 
-func (t *{{.StructName}}) Pack() []byte {
-    enc := chain.NewEncoder(t.Size())
+func (t *{{.StructName}}) Pack(enc *chain.Encoder) int {
+	oldSize := enc.GetSize()
 	{{- range $i, $member := .Members}}
 	if _, ok := t.value.(*{{$member.Type}}); ok {
 		enc.PackUint8(uint8({{$i}}))
 		{{$member.PackVariantMember}}
-		return enc.GetBytes()
+		return enc.GetSize() - oldSize
 	}
 	{{- end}}
-    return enc.GetBytes()
+    return enc.GetSize() - oldSize
 }
 
 func (t *{{.StructName}}) Unpack(data []byte) int {
