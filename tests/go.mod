@@ -3,8 +3,8 @@ module test
 go 1.17
 
 require (
-	github.com/uuosio/chain v0.2.1
-	github.com/uuosio/chaintester v0.0.0-20220913015956-d214c73596e4
+	github.com/uuosio/chain v0.2.2-0.20221126091908-3c45611b1589
+	github.com/uuosio/chaintester v0.0.0-20221108030052-a405ff36b294
 )
 
 require (
