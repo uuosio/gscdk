@@ -1,4 +1,3 @@
-Release v0.7.5
+Release v0.7.6
 
-1. Update tinygo to v0.26.0
-2. Fix Parsing generics functions
+1. Refactor Packer interface in chain module

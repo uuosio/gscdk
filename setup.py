@@ -16,7 +16,7 @@ for d in ["pysrc/tinygo", "pysrc/templates", 'pysrc/binaryen-version_109']:
 
 setup(
     name="gscdk",
-    version="0.7.5",
+    version="0.7.6",
     description="Go Smart Contract Development Kit",
     author='The UUOSIO Team',
     license="BSD-3-Clause",
