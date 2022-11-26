@@ -4,7 +4,7 @@ import (
 	"github.com/uuosio/chain"
 )
 
-//contract test
+//contract tests
 type Contract struct {
 	receiver      chain.Name
 	firstReceiver chain.Name
@@ -20,7 +20,7 @@ func NewContract(receiver, firstReceiver, action chain.Name) *Contract {
 }
 
 //action inc
-func (c *Contract) Inc(name string) {
+func (c *Contract) Inc() {
 	db := NewCounterTable(c.receiver)
 	it := db.Find(1)
 	payer := c.receiver
@@ -40,7 +40,8 @@ func (c *Contract) Inc(name string) {
 }
 
 //action test
-func (c *Contract) Test() {
+func (c *Contract) Test(name string) {
+	chain.Println("++++++++name:", name)
 	chain.Println("+++++++current_time:", chain.CurrentTime().Elapsed)
 }
 

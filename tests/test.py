@@ -70,12 +70,16 @@ def deploy_contract(package_name):
 
 @chain_test
 def test_contract():
-    deploy_contract('test')
+    deploy_contract('tests')
     args = {}
     r = chain.push_action('hello', 'inc', args, {'hello': 'active'})
     logger.info('++++++elapsed: %s', r['elapsed'])
     chain.produce_block()
 
     r = chain.push_action('hello', 'inc', args, {'hello': 'active'})
+    logger.info('++++++elapsed: %s', r['elapsed'])
+    chain.produce_block()
+
+    r = chain.push_action('hello', 'test', {'name': 'hello'}, {'hello': 'active'})
     logger.info('++++++elapsed: %s', r['elapsed'])
     chain.produce_block()

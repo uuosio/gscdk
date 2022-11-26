@@ -125,7 +125,7 @@ jobs:
         if: ${{ matrix.os == 'ubuntu-20.04' || matrix.os == 'macos-12' }}
         working-directory: tests
         run: |
-          go-contract build -o test.wasm .
+          go-contract build -o tests.wasm .
           PYTHON_SHARED_LIB_PATH=${{ env.pythonLocation }}/lib/libpython3.9.so python -m ipyeos -m pytest -s -x test.py
       - name: release-tinygo
         uses: softprops/action-gh-release@v1
