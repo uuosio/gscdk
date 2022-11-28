@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"os"
 	"testing"
 
 	"github.com/uuosio/chaintester"
@@ -9,26 +10,24 @@ import (
 
 var ctx = context.Background()
 
-func OnApply(receiver, firstReceiver, action uint64) {
-	contract_apply(receiver, firstReceiver, action)
-}
-
-func init() {
-	chaintester.SetApplyFunc(OnApply)
+func initTest() *chaintester.ChainTester {
+	tester := chaintester.NewChainTester()
+	testCoverage := os.Getenv("TEST_COVERAGE")
+	if testCoverage == "TRUE" || testCoverage == "true" || testCoverage == "1" {
+		tester.SetNativeApply("hello", ContractApply)
+	}
+	return tester
 }
 
 func TestHello(t *testing.T) {
-	// t.Errorf("++++++enable_debug: %v", os.Getenv("enable_debug"))
 	permissions := `
 	{
 		"hello": "active"
 	}
 	`
 
-	tester := chaintester.NewChainTester()
+	tester := initTest()
 	defer tester.FreeChain()
-
-	tester.EnableDebugContract("hello", true)
 
 	updateAuthArgs := `{
 		"account": "hello",
@@ -52,6 +51,13 @@ func TestHello(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
+	tester.ProduceBlock()
+
+	_, err = tester.PushAction("hello", "inc", "", permissions)
+	if err != nil {
+		panic(err)
+	}
+	// panic(ret.ToString())
 	tester.ProduceBlock()
 
 	_, err = tester.PushAction("hello", "inc", "", permissions)

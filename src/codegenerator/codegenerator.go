@@ -314,7 +314,7 @@ func (t *StructMember) UnpackMember() string {
 func (s StructMember) GetSize() string {
 	if s.IsSlice() {
 		code := fmt.Sprintf("size += chain.PackedVarUint32Length(uint32(len(t.%s)))\n", s.Name)
-		return code + "    " + calcArrayMemberSize(s.Name, s.Type)
+		return code + "\t" + calcArrayMemberSize(s.Name, s.Type)
 	} else {
 		return calcNotArrayMemberSize(s.Name, s.Type)
 	}
@@ -1148,16 +1148,16 @@ func genCodeWithTemplate(tpl string, s interface{}) (string, error) {
 }
 
 func (t *CodeGenerator) genActionCode(notify bool) error {
-	t.writeCode("        switch action.N {")
+	t.writeCode("\t\tswitch action.N {")
 	for _, action := range t.actions {
 		if action.IsNotify == notify {
 		} else {
 			continue
 		}
-		t.writeCode("        case uint64(%d): //%s", StringToName(action.ActionName), action.ActionName)
+		t.writeCode("		case uint64(%d): //%s", StringToName(action.ActionName), action.ActionName)
 		if !action.Ignore {
-			t.writeCode("            t := %s{}", action.ActionName)
-			t.writeCode("            t.Unpack(data)")
+			t.writeCode("			t := %s{}", action.ActionName)
+			t.writeCode("			t.Unpack(data)")
 			args := "("
 			for i, member := range action.Members {
 				if member.IsPointer() {
@@ -1170,7 +1170,7 @@ func (t *CodeGenerator) genActionCode(notify bool) error {
 				}
 			}
 			args += ")"
-			t.writeCode("            contract.%s%s", action.FuncName, args)
+			t.writeCode("			contract.%s%s", action.FuncName, args)
 		} else {
 			args := "("
 			for i, member := range action.Members {
@@ -1185,10 +1185,10 @@ func (t *CodeGenerator) genActionCode(notify bool) error {
 				}
 			}
 			args += ")"
-			t.writeCode("            contract.%s%s", action.FuncName, args)
+			t.writeCode("			contract.%s%s", action.FuncName, args)
 		}
 	}
-	t.writeCode("        }")
+	t.writeCode("		}")
 	return nil
 }
 
@@ -1238,9 +1238,9 @@ func (t *CodeGenerator) genStruct(structName string, members []StructMember) {
 	t.writeCode("type %s struct {", structName)
 	for _, member := range members {
 		if member.IsSlice() {
-			t.writeCode("    %s []%s", member.Name, member.Type)
+			t.writeCode("	%s []%s", member.Name, member.Type)
 		} else {
-			t.writeCode("    %s %s", member.Name, member.Type)
+			t.writeCode("	%s %s", member.Name, member.Type)
 		}
 	}
 	t.writeCode("}")
@@ -1314,7 +1314,7 @@ func (t *%s) Pack(enc *chain.Encoder) int {
 	}`, structName)
 		code := member.PackMember()
 		t.writeCode(code)
-		t.writeCode("    return enc.GetSize() - oldSize\n}\n")
+		t.writeCode("	return enc.GetSize() - oldSize\n}\n")
 	} else if specialType == OptionalType {
 		t.writeCode(`
 func (t *%s) Pack(enc *chain.Encoder) int {
@@ -1323,9 +1323,9 @@ func (t *%s) Pack(enc *chain.Encoder) int {
 		enc.WriteUint8(uint8(0))
 		return 1
 	}`, structName)
-		t.writeCode("    enc.WriteUint8(uint8(1))")
+		t.writeCode("	enc.WriteUint8(uint8(1))")
 		t.writeCode(member.PackMember())
-		t.writeCode("    return enc.GetSize() - oldSize\n}\n")
+		t.writeCode("	return enc.GetSize() - oldSize\n}\n")
 	}
 }
 
@@ -1339,14 +1339,14 @@ func (t *%s) Unpack(data []byte) int {
 	} else {
 		t.HasValue = true
 	}`, structName)
-		t.writeCode("    dec := chain.NewDecoder(data)")
+		t.writeCode("	dec := chain.NewDecoder(data)")
 		t.writeCode(member.UnpackMember())
-		t.writeCode("    return dec.Pos()\n}\n")
+		t.writeCode("	return dec.Pos()\n}\n")
 	} else if specialType == OptionalType {
 		t.writeCode(`
 func (t *%s) Unpack(data []byte) int {
 	chain.Check(len(data) >= 1, "invalid data size")
-    dec := chain.NewDecoder(data)
+	dec := chain.NewDecoder(data)
 	valid := dec.ReadUint8()
 	if valid == 0 {
 		t.IsValid = false
@@ -1357,38 +1357,38 @@ func (t *%s) Unpack(data []byte) int {
 		chain.Check(false, "invalid optional value")
 	}`, structName)
 		t.writeCode(member.UnpackMember())
-		t.writeCode("    return dec.Pos()\n}\n")
+		t.writeCode("	return dec.Pos()\n}\n")
 	}
 }
 
 func (t *CodeGenerator) genSizeCodeForSpecialStruct(specialType int, structName string, member StructMember) {
 	if specialType == BinaryExtensionType {
 		t.writeCode("func (t *%s) Size() int {", structName)
-		t.writeCode("    size := 0")
-		t.writeCode("    if !t.HasValue {")
-		t.writeCode("        return size")
-		t.writeCode("    }")
+		t.writeCode("	size := 0")
+		t.writeCode("	if !t.HasValue {")
+		t.writeCode("		return size")
+		t.writeCode("	}")
 		if member.IsSlice() {
-			t.writeCode("    size += chain.PackedVarUint32Length(uint32(len(t.%s)))", member.Name)
+			t.writeCode("	size += chain.PackedVarUint32Length(uint32(len(t.%s)))", member.Name)
 			t.writeCode(calcArrayMemberSize(member.Name, member.Type))
 		} else {
 			t.writeCode(calcNotArrayMemberSize(member.Name, member.Type))
 		}
-		t.writeCode("    return size")
+		t.writeCode("	return size")
 		t.writeCode("}")
 	} else if specialType == OptionalType {
 		t.writeCode("func (t *%s) Size() int {", structName)
-		t.writeCode("    size := 1")
-		t.writeCode("    if !t.IsValid {")
-		t.writeCode("        return size")
-		t.writeCode("    }")
+		t.writeCode("	size := 1")
+		t.writeCode("	if !t.IsValid {")
+		t.writeCode("		return size")
+		t.writeCode("	}")
 		if member.IsSlice() {
-			t.writeCode("    size += chain.PackedVarUint32Length(uint32(len(t.%s)))", member.Name)
+			t.writeCode("	size += chain.PackedVarUint32Length(uint32(len(t.%s)))", member.Name)
 			t.writeCode(calcArrayMemberSize(member.Name, member.Type))
 		} else {
 			t.writeCode(calcNotArrayMemberSize(member.Name, member.Type))
 		}
-		t.writeCode("    return size")
+		t.writeCode("	return size")
 		t.writeCode("}")
 	}
 }
@@ -1456,7 +1456,7 @@ func (t *CodeGenerator) GenCode(generatedFile string) error {
 
 		if table.PrimaryKey != "" {
 			t.writeCode("func (t *%s) GetPrimary() uint64 {", table.StructInfo.StructName)
-			t.writeCode("    return %s", table.PrimaryKey)
+			t.writeCode("	return %s", table.PrimaryKey)
 			t.writeCode("}")
 		}
 
@@ -1482,15 +1482,15 @@ func (t *CodeGenerator) GenCode(generatedFile string) error {
 
 	t.writeCode(cMainCode)
 	if t.hasFinalizeFunction() {
-		t.writeCode("    defer contract.Finalize()")
+		t.writeCode("	defer contract.Finalize()")
 	}
-	t.writeCode("    if receiver == firstReceiver {")
+	t.writeCode("	if receiver == firstReceiver {")
 	t.GenActionCode()
-	t.writeCode("    }")
+	t.writeCode("	}")
 
-	t.writeCode("    if receiver != firstReceiver {")
+	t.writeCode("	if receiver != firstReceiver {")
 	t.GenNotifyCode()
-	t.writeCode("    }")
+	t.writeCode("	}")
 	t.writeCode("}")
 	return nil
 }

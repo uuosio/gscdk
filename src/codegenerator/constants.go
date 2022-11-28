@@ -141,8 +141,8 @@ func (t *{{.Name}}Table) Remove() {
 const cImportCode = `package %[1]s
 import (
 	"github.com/uuosio/chain"
-    "github.com/uuosio/chain/database"
-    "unsafe"
+	"github.com/uuosio/chain/database"
+	"unsafe"
 )
 `
 
@@ -419,7 +419,7 @@ func (t *{{.StructInfo.StructName}}) GetSecondaryValue(index int) interface{} {
 
 func (t *{{.StructInfo.StructName}}) SetSecondaryValue(index int, v interface{}) {
 	switch index {
-		{{- range $i, $val := .SecondaryIndexes}}
+{{- range $i, $val := .SecondaryIndexes}}
 	case {{$i}}:
 		{{$val.GetSetter}}
 {{- end}}
@@ -435,23 +435,23 @@ func (t *{{.StructName}}) Pack(enc *chain.Encoder) int {
 	{{- range $i, $member := .Members}}
 	{{$member.PackMember}}
 	{{- end}}
-    return enc.GetSize() - oldSize
+	return enc.GetSize() - oldSize
 }
 
 func (t *{{.StructName}}) Unpack(data []byte) int {
-    dec := chain.NewDecoder(data)
+	dec := chain.NewDecoder(data)
 	{{- range $i, $member := .Members}}
 	{{$member.UnpackMember}}
 	{{- end}}
-    return dec.Pos()
+	return dec.Pos()
 }
 
 func (t *{{.StructName}}) Size() int {
-    size := 0
+	size := 0
 	{{- range $i, $member := .Members}}
 	{{$member.GetSize}}
 	{{- end}}
-    return size
+	return size
 }
 `
 
@@ -478,7 +478,7 @@ func (t *{{.StructName}}) Pack(enc *chain.Encoder) int {
 		return enc.GetSize() - oldSize
 	}
 	{{- end}}
-    return enc.GetSize() - oldSize
+	return enc.GetSize() - oldSize
 }
 
 func (t *{{.StructName}}) Unpack(data []byte) int {

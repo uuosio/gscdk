@@ -148,7 +148,7 @@ python3 -m pip install -U ipyeos
 Then run the debugging server:
 
 ```bash
-eos-debugger
+eosdebugger
 ```
 
 On Windows, you need to use a docker image to run a debugging server.
@@ -170,7 +170,8 @@ docker run -it --rm -p 9090:9090 -p 9092:9092 -t ghcr.io/uuosio/ipyeos
 Use the following command to generate a code coverage report in html
 
 ```bash
-go test -coverprofile=coverage.out
+go-contract build
+TEST_COVERAGE=1 go test -coverprofile=coverage.out
 go tool cover -html=coverage.out
 ```
 
