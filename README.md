@@ -1,5 +1,9 @@
 Go Smart Contracts Development Kit
 
+[![PyPi](https://img.shields.io/pypi/v/gscdk.svg)](https://pypi.org/project/gscdk)
+[![PyPi](https://img.shields.io/pypi/dm/gscdk.svg)](https://pypi.org/project/gscdk)
+
+
 # What a Go Smart Contract looks like?
 
 Here is an example
