@@ -99,7 +99,7 @@ func NewTableTemplate(name string, tableName string, indexes []SecondaryIndexInf
 	return &TableTemplate{name, nTableName, idxName, indexes}
 }
 
-//handle binary_extension and optional abi types
+// handle binary_extension and optional abi types
 type SpecialAbiType struct {
 	typ    int
 	name   string
@@ -752,7 +752,7 @@ func (t *CodeGenerator) parseTableIndex(field *ast.Field, info *TableInfo) error
 
 func (t *CodeGenerator) parseTableStruct(packageName string, declare *ast.GenDecl, doc string) error {
 	parts := strings.Fields(doc)
-	if parts[0] != "//table" {
+	if parts[0] != "table" {
 		return t.newError(declare.Pos(), "not a table struct")
 	}
 	if !(len(parts) >= 2 && len(parts) <= 4) {
@@ -838,12 +838,12 @@ func (t *CodeGenerator) parseStruct(packageName string, declare *ast.GenDecl) er
 	if declare.Doc != nil {
 		n := len(declare.Doc.List)
 		doc := declare.Doc.List[n-1]
-		lastLineDoc = strings.TrimSpace(doc.Text)
-		if strings.HasPrefix(lastLineDoc, "//table") {
-			structType = NewABIType("//table")
+		lastLineDoc = strings.TrimSpace(doc.Text[2:])
+		if strings.HasPrefix(lastLineDoc, "table") {
+			structType = NewABIType("table")
 			//items := Split(lastLineDoc)
 			return t.parseTableStruct(packageName, declare, lastLineDoc)
-		} else if strings.HasPrefix(lastLineDoc, "//contract") {
+		} else if strings.HasPrefix(lastLineDoc, "contract") {
 			structType = NewABIType("//contract")
 			parts := strings.Fields(lastLineDoc)
 			if len(parts) == 2 {
@@ -855,7 +855,7 @@ func (t *CodeGenerator) parseStruct(packageName string, declare *ast.GenDecl) er
 				t.contractName = name
 				isContractStruct = true
 			}
-		} else if strings.HasPrefix(lastLineDoc, "//variant") {
+		} else if strings.HasPrefix(lastLineDoc, "variant") {
 			structType = NewABIType("//variant")
 			parts := strings.Fields(lastLineDoc)
 			partMap := make(map[string]bool)
@@ -874,7 +874,7 @@ func (t *CodeGenerator) parseStruct(packageName string, declare *ast.GenDecl) er
 				member.Pos = doc.Pos()
 				info.Members = append(info.Members, member)
 			}
-		} else if strings.HasPrefix(lastLineDoc, "//optional") {
+		} else if strings.HasPrefix(lastLineDoc, "optional") {
 			structType = NewABIType("//optional")
 		} else if strings.HasPrefix(lastLineDoc, "//binaryextention") {
 			structType = NewABIType("//binaryextention")
@@ -954,7 +954,7 @@ func (t *CodeGenerator) parseFunc(f *ast.FuncDecl) error {
 	}
 	n := len(f.Doc.List)
 	doc := f.Doc.List[n-1]
-	text := strings.TrimSpace(doc.Text)
+	text := strings.TrimSpace(doc.Text[2:])
 
 	//	parts := Split(text)
 	parts := strings.Fields(text)
@@ -962,7 +962,7 @@ func (t *CodeGenerator) parseFunc(f *ast.FuncDecl) error {
 		return nil
 	}
 
-	if parts[0] == "//action" || parts[0] == "//notify" {
+	if parts[0] == "action" || parts[0] == "notify" {
 	} else {
 		return nil
 	}
@@ -992,7 +992,7 @@ func (t *CodeGenerator) parseFunc(f *ast.FuncDecl) error {
 	action.FuncName = f.Name.Name
 	action.Ignore = ignore
 
-	if parts[0] == "//notify" {
+	if parts[0] == "notify" {
 		action.IsNotify = true
 	} else {
 		action.IsNotify = false
