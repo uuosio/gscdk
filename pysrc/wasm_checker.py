@@ -216,6 +216,7 @@ allowed_functions = [
         "memmove",
         "memcmp",
         "memset",
+        "get_code_hash"
 ]
 
 class WasmReader(object):
