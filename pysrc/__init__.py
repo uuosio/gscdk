@@ -8,7 +8,7 @@ import argparse
 import string
 from .wasm_checker import check_import_section
 
-__version__ = "0.7.7"
+__version__ = "0.7.8"
 
 #https://stackabuse.com/how-to-print-colored-text-in-python/
 #https://stackoverflow.com/questions/287871/how-do-i-print-colored-text-to-the-terminal
