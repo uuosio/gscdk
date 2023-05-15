@@ -1,12 +1,15 @@
-Go Smart Contracts Development Kit
+# Go Smart Contracts Development Kit (GSCDK)
 
-[![PyPi](https://img.shields.io/pypi/v/gscdk.svg)](https://pypi.org/project/gscdk)
-[![PyPi](https://img.shields.io/pypi/dm/gscdk.svg)](https://pypi.org/project/gscdk)
+[![PyPi Version](https://img.shields.io/pypi/v/gscdk.svg)](https://pypi.org/project/gscdk)
+[![PyPi Downloads](https://img.shields.io/pypi/dm/gscdk.svg)](https://pypi.org/project/gscdk)
 
+## Overview
 
-# What a Go Smart Contract looks like?
+The Go Smart Contracts Development Kit (GSCDK) provides a comprehensive toolkit for creating, building, and debugging Go-based smart contracts. 
 
-Here is an example
+## Example of a Go Smart Contract
+
+Here is an example of what a Go Smart Contract looks like using GSCDK:
 
 ```go
 package main
@@ -54,96 +57,103 @@ func (c *MyContract) SayHello(name string) {
 }
 ```
 
-# Quick Start
 
-[Quick Start](https://colab.research.google.com/github/uuosio/gscdk/blob/main/quickstart/quickstart.ipynb)
+## Quick Start
 
-# Installation
+Jump right into building your first smart contract with our [Quick Start Guide](https://colab.research.google.com/github/uuosio/gscdk/blob/main/quickstart/quickstart.ipynb).
+
+## Installation
+
+To install GSCDK, run the following command:
+
+For Unix-based platforms (like Linux or macOS):
 
 ```bash
 python3 -m pip install gscdk
 ```
 
-For the Windows platform:
+For Windows:
 
 ```bash
 python -m pip install gscdk
 ```
 
-### Upgrade From an Old Version
+### Upgrading GSCDK
+
+If you've previously installed GSCDK and want to upgrade to the latest version, use the following command:
+
+For Unix-based platforms:
 
 ```bash
 python3 -m pip install --upgrade gscdk
 ```
 
-For the Windows platform:
+For Windows:
 
 ```bash
 python -m pip install --upgrade gscdk
 ```
 
-# Building Go Smart Contracts Compiler
+## Building Go Smart Contracts Compiler
 
-Follow the steps in [Building](./BUILDING.md)
-
-That will build the `tinygo` command in the compiler/build directory that supports building Go Smart Contracts.
+To build the `tinygo` command that supports building Go Smart Contracts, follow the instructions in [Building](./BUILDING.md). Once built, add the `tinygo` command to your PATH:
 
 ```bash
 export PATH=$(pwd)/compiler/build:$PATH
 ```
 
-# go-contract
+## Using go-contract
 
-## Initializing a project with the "init" subcommand
+`go-contract` is a powerful tool for managing your smart contract projects. Learn more about its features below:
 
-The "init" command initializes a project with the contract name
+### Initializing a Project
 
-```
+Use the "init" command to initialize a project with a specific contract name:
+
+```bash
 go-contract init mycontract
 cd mycontract
 ```
 
-## Generating ABI and Extra Code for Smart Contracts
+### Generating ABI and Extra Code
 
-```
+Use the "gencode" command to generate ABI and extra code for smart contracts:
+
+```bash
 go-contract gencode
 ```
 
-Code generation is also the default option for the "build" command
+Note: Code generation is also the default option for the "build" command.
 
-## Building Go Smart Contracts Project
+### Building Your Project
 
-#### Compiling the Source Code
+To compile the source code of your project, use the "build" command:
 
 ```bash
 go-contract build
 ```
 
-#### Disable Code Generation during Building
+To disable code generation during the build process, use the `-gen-code=false` flag:
 
 ```bash
-go-contract build -gen-code=false .
+go-contract build -gen-code=false
 ```
 
-#### Disable Code Optimization
-
-Specifying `-d` or `--debug` option to disable wasm optimization.
+To disable code optimization, use the `-d` or `--debug` option:
 
 ```bash
 go-contract build -d
 ```
 
+## Debugging
 
-
-# Debugging
-
-Install `ipyeos` first for debugging.
+Before debugging, install `ipyeos`:
 
 ```bash
 python3 -m pip install ipyeos
 ```
 
-In order to update to a new version, use the following command:
+To update to a new version, use the following command:
 
 ```bash
 python3 -m pip install -U ipyeos
@@ -155,29 +165,46 @@ Then run the debugging server:
 eosdebugger
 ```
 
-On Windows, you need to use a docker image to run a debugging server.
+On Windows, use a Docker image to run a debugging server.
+
+First, pull ipyeos docker image:
 
 ```bash
 docker pull ghcr.io/uuosio/ipyeos:latest
 ```
 
-Run the debugging server on the Windows platform:
-
+then start a debugging server from docker:
 ```bash
 docker run -it --rm -p 9090:9090 -p 9092:9092 -t ghcr.io/uuosio/ipyeos
 ```
 
+Here's a sneak peek of the debugger in action:
+
 ![Debugging](https://github.com/uuosio/gscdk/blob/main/images/debugging.gif)
 
-# Code Coverage Analysis
+## Code Coverage Analysis
 
-Use the following command to generate a code coverage report in html
+To generate a code coverage report in HTML, follow these steps:
+
+1. Build your project:
 
 ```bash
 go-contract build
+```
+
+2. Generate a coverage report:
+
+```bash
 TEST_COVERAGE=1 go test -coverprofile=coverage.out
+```
+
+3. Create an HTML report from the coverage data:
+
+```bash
 go tool cover -html=coverage.out
 ```
+
+Here's an example of what the code coverage report looks like:
 
 ![Code Coverage](https://github.com/uuosio/gscdk/blob/main/images/code-coverage.png)
 
