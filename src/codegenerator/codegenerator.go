@@ -914,7 +914,7 @@ func (t *CodeGenerator) parseStruct(packageName string, declare *ast.GenDecl) er
 	}
 
 	t.structs = append(t.structs, &info)
-	if strings.TrimSpace(lastLineDoc) == "//packer" {
+	if strings.TrimSpace(lastLineDoc) == "packer" {
 		t.PackerMap[info.StructName] = &info
 	}
 	return nil
