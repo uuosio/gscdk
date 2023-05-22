@@ -15,7 +15,7 @@ chaintester.chain_config['contracts_console'] = True
 
 logger = log.get_logger(__name__)
 
-def update_auth(chain, account):
+def update_auth(tester, account):
     a = {
         "account": account,
         "permission": "active",
@@ -32,50 +32,47 @@ def update_auth(chain, account):
             "waits": []
         }
     }
-    chain.push_action('eosio', 'updateauth', a, {account:'active'})
+    tester.push_action('eosio', 'updateauth', a, {account:'active'})
 
-def init_chain():
-    chain = chaintester.ChainTester()
-    update_auth(chain, 'hello')
-    return chain
+def init_tester():
+    tester = chaintester.ChainTester()
+    update_auth(tester, 'hello')
+    return tester
 
-chain = None
 def chain_test(fn):
-    def call(*args, **vargs):
-        global chain
-        chain = init_chain()
-        ret = fn(*args, **vargs)
-        chain.free()
+    def call():
+        tester = init_tester()
+        ret = fn(tester)
+        tester.free()
         return ret
     return call
 
-class NewChain():
+class NewChainTester():
     def __init__(self):
-        self.chain = None
+        self.tester = None
 
     def __enter__(self):
-        self.chain = init_chain()
-        return self.chain
+        self.tester = init_tester()
+        return self.tester
 
     def __exit__(self, type, value, traceback):
-        self.chain.free()
+        self.tester.free()
 
 test_dir = os.path.dirname(__file__)
-def deploy_contract(package_name):
+def deploy_contract(tester, package_name):
     with open(f'{test_dir}/{package_name}.wasm', 'rb') as f:
         code = f.read()
     with open(f'{test_dir}/{package_name}.abi', 'rb') as f:
         abi = f.read()
-    chain.deploy_contract('hello', code, abi)
+    tester.deploy_contract('hello', code, abi)
 
 @chain_test
-def test_contract():
-    deploy_contract('{{name}}')
-    args = {}
-    r = chain.push_action('hello', 'inc', args, {'hello': 'active'})
+def test_contract(tester):
+    deploy_contract(tester, '{{name}}')
+    r = tester.push_action('hello', 'inc', b'', {'hello': 'active'})
     logger.info('++++++elapsed: %s', r['elapsed'])
-    chain.produce_block()
+    tester.produce_block()
 
-    r = chain.push_action('hello', 'inc', args, {'hello': 'active'})
+    r = tester.push_action('hello', 'inc', args, {'hello': 'active'})
     logger.info('++++++elapsed: %s', r['elapsed'])
-    chain.produce_block()
+    tester.produce_block()
