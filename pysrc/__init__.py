@@ -98,11 +98,11 @@ There are ready-to-install packages for many platforms:
 
 def init(project_name):
     for c in project_name:
-        if not c in string.ascii_lowercase or c == '_':
+        if not c in string.ascii_lowercase and not c == '_':
             raise Exception('project name contain invalid character(s), only characters in [a-z_] supported')
     os.mkdir(project_name)
     src_dir = os.path.dirname(__file__)
-    for file in ['main.go', 'structs.go', 'tables.go', 'utils.go', 'basic_test.go', 'test.py', 'test.sh', 'build.sh', 'test.sh']:
+    for file in ['main.go', 'structs.go', 'tables.go', 'utils.go', 'basic_test.go', 'test.py', 'test.sh', 'build.sh', 'test.sh', 'pytest.ini']:
         src_file = os.path.join(src_dir, f'templates/init/{file}')
         with open(src_file, 'r') as f:
             content = f.read()
