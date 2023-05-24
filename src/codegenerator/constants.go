@@ -61,6 +61,15 @@ func New{{.Name}}Table(code chain.Name, optionalScope ...chain.Name) *{{.Name}}T
 func (mi *{{$.Name}}Table) GetIdxTableBy{{$val.Name}}() *database.{{$val.TableType}} {
 	return mi.GetIdxTableByIndex({{$i}}).(*database.{{$val.TableType}})
 }
+
+func (mi *{{$.Name}}Table) Update{{$val.Name}}(it *database.SecondaryIterator, value {{$val.FieldType}}, payer chain.Name) {
+	table := mi.GetIdxTableByIndex({{$i}}).(*database.{{$val.TableType}})
+	table.Update(it, value, payer.N)
+	primaryIt, data := mi.GetByKey(it.Primary)
+	chain.Check(primaryIt.IsOk(), "bad primary key")
+	data.{{$val.Name}} = value
+	mi.MultiIndexInterface.GetPrimaryTable().Update(primaryIt, chain.EncoderPack(data), payer)
+}
 {{- end}}
 `
 

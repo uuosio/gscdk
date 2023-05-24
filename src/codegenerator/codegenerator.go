@@ -74,6 +74,7 @@ type ActionInfo struct {
 
 type SecondaryIndexInfo struct {
 	Type      string
+	FieldType string
 	TableType string
 	Name      string
 	Getter    string
@@ -705,10 +706,13 @@ func (t *CodeGenerator) parseTableIndex(field *ast.Field, info *TableInfo) error
 		} else if ty == "chain.Float128" {
 			dbType = "IdxTableFloat128"
 			idx = "IDXFloat128"
+		} else {
+			err := fmt.Errorf("Invalid secondary type: %s", ty)
+			panic(err)
 		}
 		getter := fmt.Sprintf("t.%s", name)
 		setter := fmt.Sprintf("t.%s = %%v", name)
-		indexInfo := SecondaryIndexInfo{idx, dbType, name, getter, setter}
+		indexInfo := SecondaryIndexInfo{idx, ty, dbType, name, getter, setter}
 		info.SecondaryIndexes = append(info.SecondaryIndexes, indexInfo)
 	} else if _, ok := t.indexTypeMap[dbType[2:]]; ok {
 		if info.Singleton {
@@ -743,8 +747,10 @@ func (t *CodeGenerator) parseTableIndex(field *ast.Field, info *TableInfo) error
 			return t.newError(comment.Pos(), "Invalid setter in: "+indexText)
 		}
 
+		ty, _ := parseType(field)
+
 		dbType := indexTypeToSecondaryTableName(idx)
-		indexInfo := SecondaryIndexInfo{idx, dbType, name, getter, setter}
+		indexInfo := SecondaryIndexInfo{idx, ty, dbType, name, getter, setter}
 		info.SecondaryIndexes = append(info.SecondaryIndexes, indexInfo)
 	}
 	return nil
