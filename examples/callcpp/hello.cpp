@@ -13,7 +13,10 @@ struct record {
 };
 
 extern "C" void say_hello() {
-    eosio::print("++++++++hello,world\n");
+    uint64_t *ptr = new uint64_t(0);
+    eosio::print(uint64_t(ptr), "\n");
+    eosio::print_f("++++++++hello,world!!! %\n", uint64_t(ptr));
+    delete ptr;
 }
 
 
